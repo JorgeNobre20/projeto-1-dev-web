@@ -41,62 +41,27 @@
             <h2 class="pb-2 border-bottom">Lista de Carros</h2>
             <a type="button" href="/admin/loja/add-carro" class="btn btn-primary mt-2 mb-2">Adicionar Carro</a>
         </div>
-
-        
     
         <div class="row row-cols-1 row-cols-lg-3 align-items-stretch g-4 py-5">
-          <div class="col">
-            <!-- Colocar foto do carro de fundo -->
-            <div class="card card-cover h-150 overflow-hidden text-bg-dark rounded-4 shadow-lg" style="background-image: url('unsplash-photo-1.jpg');">
-              <div class="d-flex flex-column h-50 p-5 pb-3 text-white text-shadow-1 text-center infos">
-                <h3 class="display-6 lh-1 fw-bold">Nome</h3>
-                <h3 class="mb-2">Marca, cor, valor</h3>
-                <h4 class="mb-2">Valor Diária</h4>
-                <h6 class="mb-2">Status: Alguma coisa</h6>  
-              </div>
-
-              <div class="text-center">
-                <a type="button" href="/admin/loja" class="btn btn-primary">Editar</a> 
-                <a type="button" href="/admin/aluguel" class="btn btn-danger">Deletar</a>
-              </div>
-            </div>
-
-            
-          </div>
-    
-          <div class="col">
-            <!-- Colocar foto do carro de fundo -->
-            <div class="card card-cover h-150 overflow-hidden text-bg-dark rounded-4 shadow-lg" style="background-image: url('unsplash-photo-1.jpg');">
-              <div class="d-flex flex-column h-50 p-5 pb-3 text-white text-shadow-1 text-center infos">
-                <h3 class="display-6 lh-1 fw-bold">Nome</h3>
-                <h3 class="mb-2">Marca, cor, valor</h3>
-                <h4 class="mb-2">Valor Diária</h4>
-                <h6 class="mb-2">Status: Alguma coisa</h6>
-              </div>
-
-              <div class="text-center">
-                <a type="button" href="/admin/loja" class="btn btn-primary">Editar</a> 
-                <a type="button" href="/admin/aluguel" class="btn btn-danger">Deletar</a>
+          <% veiculos.forEach(veiculo =>{ %>
+            <div class="col">
+              <!-- Colocar foto do carro de fundo -->
+              <div class="card card-cover h-150 overflow-hidden text-bg-dark rounded-4 shadow-lg" style="background-image: url('../../public<%= veiculo.foto %>');">
+                <div class="d-flex flex-column h-50 p-5 pb-3 text-white text-shadow-1 text-center infos">
+                  <h3 class="display-6 lh-1 fw-bold"><%= veiculo.nome %></h3>
+                  <h3 class="mb-2"><%= veiculo.marca%>, <%= veiculo.cor%>,<%= veiculo.valor%></h3>
+                  <h4 class="mb-2">Valor Diária: <%= veiculo.diaria %></h4>
+                  <h6 class="mb-2">Status: <%= veiculo.status == 1 ? "Disponivel" : "Indisponivel" %></h6>  
+                  <h6 class="mb-2"><%= veiculo.status == 0 ? "Disponivel em : DATA" : ""%></h6>
+                </div>
+  
+                <div class="text-center">
+                  <a href="/editLoja?id=<%= veiculo._id %> " class="edit btn btn-primary">Editar</a>
+						      <a href="/deletarVeiculo?excluir=<%= veiculo._id %>"class="delete btn btn-danger" id="<%= veiculo._id %> ">Excluir</a>
+                </div>
               </div>
             </div>
-          </div>
-    
-          <div class="col">
-            <!-- Colocar foto do carro de fundo -->
-            <div class="card card-cover h-150 overflow-hidden text-bg-dark rounded-4 shadow-lg" style="background-image: url('unsplash-photo-1.jpg');">
-              <div class="d-flex flex-column h-50 p-5 pb-3 text-white text-shadow-1 text-center infos">
-                <h3 class="display-6 lh-1 fw-bold">Nome</h3>
-                <h3 class="mb-2">Marca, cor, valor</h3>
-                <h4 class="mb-2">Valor Diária</h4>
-                <h6 class="mb-2">Status: Alguma coisa</h6>
-              </div>
-
-              <div class="text-center">
-                <a type="button" href="/admin/loja" class="btn btn-primary">Editar</a> 
-                <a type="button" href="/admin/aluguel" class="btn btn-danger">Deletar</a>
-              </div>
-            </div>
-          </div>
+          <%}) %>
         </div>
       </div>
     

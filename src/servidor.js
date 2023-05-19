@@ -16,8 +16,9 @@ app.use(express.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
 app.set("views", "./src/visoes");
 
-app.get("/", (request, response) => {
-  response.render("home");
+app.get("/", async (request, response) => {
+  let veiculos = await VeiculosFuncoes.pegarVeiculos();
+  response.render("home", {veiculos});
 });
 
 app.listen(PORTA_SERVIDOR, () => {
@@ -84,8 +85,9 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 //tudo da parte de loja
-app.get("/admin/loja", (request, response) => {
-  response.render("admin-loja");
+app.get("/admin/loja", async (request, response) => {
+  let veiculos = await VeiculosFuncoes.pegarVeiculos();
+  response.render("admin-loja", {veiculos});
 });
 
 //tudo da parte de aluguel
@@ -94,7 +96,7 @@ app.get("/admin/aluguel", (request, response) => {
 });
 
 //tudo da parte de add carro
-app.get("/admin/loja/add-carro", (request, response) => {
+app.get("/admin/loja/add-carro", async (request, response) => {
   response.render("admin-addCarro");
 });
 
@@ -135,3 +137,13 @@ app.post(
     }
   }
 );
+
+app.get("/deletarVeiculo", async (req, res) => {
+  let veiculo = await VeiculosFuncoes.deletarVeiculo(req.query.excluir);
+
+	if (veiculo) {
+		res.redirect("/admin/loja");
+	} else {
+		res.render("/admin-addCarro", { cad: false });
+	}
+});
