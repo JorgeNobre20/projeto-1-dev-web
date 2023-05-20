@@ -39,7 +39,7 @@
       <div class="container px-4 py-5" id="custom-cards">
         <div class="d-flex justify-content-between">
             <h2 class="pb-2 border-bottom">Lista de Carros</h2>
-            <a type="button" href="/admin/loja/add-carro" class="btn btn-primary mt-2 mb-2">Adicionar Carro</a>
+            <a type="button" href="/admin/loja/add-veiculo" class="btn btn-primary mt-2 mb-2">Adicionar Carro</a>
         </div>
     
         <div class="row row-cols-1 row-cols-lg-3 align-items-stretch g-4 py-5">
@@ -56,8 +56,8 @@
                 </div>
   
                 <div class="text-center">
-                  <a href="/editLoja?id=<%= veiculo._id %> " class="edit btn btn-primary">Editar</a>
-						      <a href="/deletarVeiculo?excluir=<%= veiculo._id %>"class="delete btn btn-danger" id="<%= veiculo._id %> ">Excluir</a>
+                  <a href="/editVeiculo?id=<%= veiculo._id %> " class="edit btn btn-primary">Editar</a>
+						      <a href="/deletarVeiculo?excluir=<%= veiculo._id %>"class="delete btn btn-danger" id="<%= veiculo._id %> ">Remover</a>
                 </div>
               </div>
             </div>
