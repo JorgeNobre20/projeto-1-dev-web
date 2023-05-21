@@ -1,0 +1,91 @@
+<div class="card mb-3 w-100">
+  <div class="row g-0">
+    <div class="col-md-4 h-100">
+      <span 
+        class="badge text-bg-secondary position-absolute opacity-100 rounded-1" 
+        data-bs-toggle="modal" 
+        data-bs-target="#modalDetalhesCarro"
+        style="cursor: pointer;"
+        onclick="preencherModalDetalhesCarro(<%= JSON.stringify(aluguel) %>)"
+      >
+        ID do Aluguel: <%= aluguel.id %>
+      </span>
+
+      <img 
+        src="<%= aluguel.carro.urlImagem %>" 
+        class="img-fluid rounded h-100" 
+        alt="Foto do carro"
+        style="max-height: 16rem; object-fit: cover;"
+      />
+    </div>
+
+    <div class="col-md-8">
+      <div class="h-100 d-flex justify-content-between py-2">
+        <div class="px-3 h-100 d-flex flex-column justify-content-between" style="width: 70%;">
+          <div>
+            <h5 class="card-title mb-3"><%= aluguel.carro.modelo %></h5>
+            <p class="card-text m-0"> <strong>Cliente: </strong><%= aluguel.cliente.nome %></p>
+            <p class="m-0 my-1"><strong>Período: </strong><%= aluguel.dataInicial %> até <%= aluguel.dataFinal %> ( <%= aluguel.numeroDiasAluguel %> dia(s) )</p>   
+            <p class="m-0"><strong>Valor da Diária: </strong>R$ <%= aluguel.carro.precoDiaria %></p>     
+                   
+          </div>
+
+          <button 
+            type="button" 
+            class="btn btn-secondary btn-sm w-50"
+            data-bs-toggle="modal" 
+            data-bs-target="#modalDetalhesCarro"
+            onclick="preencherModalDetalhesCarro(<%= JSON.stringify(aluguel) %>)"
+          >
+            Ver Dados Completos do Veículo
+          </button> 
+        </div>
+
+        <div class="d-flex flex-column justify-content-between px-3" style="width: 30%;">
+          <div class="d-flex flex-column align-items-end">
+            <p class="mb-0 fw-semibold text-secondary" style="font-size: 1rem;">Valor Total do Aluguel</p>
+            <strong class="fs-4">R$ <%= aluguel.carro.precoDiaria * aluguel.numeroDiasAluguel %></strong>
+          </div>
+          <div class="d-flex flex-column">  
+            
+            <% if(aluguel.status === "PENDENTE"){ %>
+              <div class="alert alert-warning d-flex align-items-center p-0 py-1 px-2 mb-2" role="alert">
+                <i class="bi-exclamation-circle-fill me-2" style="font-size: 0.8rem;"></i>
+                <span style="font-size: 0.8rem;"> 
+                  Aguardando confirmação
+                </span>
+              </div>
+            <% } %>
+
+            <% if(aluguel.status === "CONFIRMADO"){ %>
+              <div class="alert alert-success d-flex align-items-center p-0 py-1 px-2 mb-2" role="alert">
+                <i class="bi-check-circle-fill me-2" style="font-size: 0.8rem;"></i>
+                <span style="font-size: 0.8rem;"> 
+                  Aluguel Confirmado
+                </span>
+              </div>
+            <% } %>
+
+            <% if(aluguel.status === "REJEITADO"){ %>
+              <div class="alert alert-danger d-flex align-items-center p-0 py-1 px-2 mb-2" role="alert">
+                <i class="bi-x-circle-fill me-2" style="font-size: 0.8rem;"></i>
+                <span style="font-size: 0.8rem;"> 
+                  Aluguel Rejeitado
+                </span>
+              </div>
+            <% } %>
+
+            <% if(aluguel.status === "PENDENTE"){ %>
+              <div class="d-flex">
+                <button type="button" class="btn btn-success btn-sm w-50">Confirmar</button>
+                <button type="button" class="btn btn-danger ms-2 btn-sm w-50">Rejeitar</button>
+              </div>
+            <% } %>
+          
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
