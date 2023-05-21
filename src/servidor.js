@@ -1,5 +1,9 @@
 import express from "express";
 
+import { database } from "../src/Conexao-Banco.js";
+import path from "path";
+import mongo from "mongodb";
+
 const app = express();
 const PORTA_SERVIDOR = 3000;
 
@@ -51,7 +55,10 @@ app.listen(PORTA_SERVIDOR, () => {
 
 
 
-/* Parte dos carros (Crud) */
+
+
+
+/* -------------------- Parte dos carros (Crud) -------------------- */
 
 // Configuração de armazenamento da imagem
 import multerIMPORT from "multer";
@@ -91,13 +98,13 @@ app.get("/admin/aluguel", (request, response) => {
   response.render("admin-aluguel");
 });
 
-//tudo da parte de add carro
-app.get("/admin/loja/add-carro", async (request, response) => {
-  response.render("admin-addCarro");
+//tudo da parte de add/remover/edit carro
+app.get("/admin/loja/add-veiculo", async (request, response) => {
+  response.render("admin-addVeiculo");
 });
 
 app.post(
-  "/admin/loja/add-carro",
+  "/admin/loja/add-veiculo",
   upload.single("filepond"),
   async (req, res, next) => {
     //console.log(req.file)
@@ -129,7 +136,7 @@ app.post(
     if (veiculos) {
       res.redirect("/admin/loja");
     } else {
-      res.render("/admin-addCarro", { cad: false });
+      res.render("/admin-addVeiculo");
     }
   }
 );
@@ -140,6 +147,46 @@ app.get("/deletarVeiculo", async (req, res) => {
 	if (veiculo) {
 		res.redirect("/admin/loja");
 	} else {
-		res.render("/admin-addCarro", { cad: false });
+		res.render("/admin-addVeiculo");
+	}
+});
+
+app.get("/editVeiculo", async (req, res) => {
+	let veiculos = await VeiculosFuncoes.pegarVeiculos();
+	let id = req.query.id;
+
+  let veiculoEditar = veiculos.filter((veiculo) => veiculo._id == id)[0];
+
+	res.render("admin-editVeiculo", { veiculoEditar, id });
+});
+
+app.post("/editVeiculo", upload.single("filepond"), async (req, res) => {
+	let veiculo;
+
+	if (req.file != undefined) {
+		let src = "/images/" + req.file.filename;
+
+		veiculo = await VeiculosFuncoes.updateVeiculo({
+			_id: req.body._id,
+			nome: req.body.nome,
+			marca: req.body.marca,
+			cor: req.body.cor,
+			diaria: req.body.diaria,
+			foto: src,
+		});
+	} else {
+		veiculo = await VeiculosFuncoes.updateVeiculo({
+			_id: req.body._id,
+			nome: req.body.nome,
+			marca: req.body.marca,
+			cor: req.body.cor,
+			diaria: req.body.diaria,
+		});
+	}
+
+	if (veiculo) {
+		res.redirect("/admin/loja");
+	} else {
+		res.render("/admin-addVeiculo");
 	}
 });
