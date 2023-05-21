@@ -1,16 +1,11 @@
 import express from "express";
-import { database } from "../src/Conexao-Banco.js";
-
-import mongo from "mongodb";
-import path from "path";
 
 const app = express();
 const PORTA_SERVIDOR = 3000;
-//Conexão com o banco de dados
-const db = await database.connect();
 
 // Middlewares
 app.use(express.urlencoded({ extended: true }));
+app.use(express.static("public"));
 
 // Template Engine
 app.set("view engine", "ejs");
@@ -21,11 +16,11 @@ app.get("/", async (request, response) => {
   response.render("home", {veiculos});
 });
 
+app.use("/admin", rotasAdmin);
+
 app.listen(PORTA_SERVIDOR, () => {
   console.log(`Servidor rodando na porta ${PORTA_SERVIDOR}`);
 });
-
-
 
 
 
@@ -61,6 +56,7 @@ app.listen(PORTA_SERVIDOR, () => {
 // Configuração de armazenamento da imagem
 import multerIMPORT from "multer";
 import { VeiculosFuncoes } from "./database/veiculos.js";
+import { rotasAdmin } from "./rotas/admin.js";
 const multer = multerIMPORT;
 
 const storage = multer.diskStorage({

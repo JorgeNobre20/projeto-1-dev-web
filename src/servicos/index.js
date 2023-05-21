@@ -1,0 +1,1 @@
+export { ServicoData } from "./ServicoData.js";
