@@ -28,16 +28,9 @@ class VeiculosClasse{
     //Função para fazer update no veiculo, pasando o veiculo como parametro 
 	async updateVeiculo(veiculo){
 		let db = await database.connect(); // Conecta-se com o banco
-		if(veiculo.foto != undefined){
-			let updateVeiculo = await db.collection("veiculos").updateOne(
-				{_id:veiculo._id},//CRITÉRIO DE UPDATE
-				{$set:{nome:veiculo.nome, marca:veiculo.marca, cor:veiculo.cor, diaria:veiculo.diaria, foto:veiculo.foto}}); 
-			
-		}else{
-			let updateVeiculo = await db.collection("veiculos").updateOne(
-				{_id:veiculo._id},//CRITÉRIO DE UPDATE
-				{$set:{nome:veiculo.nome, marca:veiculo.marca, cor:veiculo.cor, diaria:veiculo.diaria}}); 
-		}
+		let updateVeiculo = await db.collection("veiculos").updateOne(
+			{_id:veiculo._id},//CRITÉRIO DE UPDATE
+			{$set:{nome:veiculo.nome, marca:veiculo.marca, cor:veiculo.cor, diaria:veiculo.diaria, foto:veiculo.foto}}); 
 		return true; 
 	}
 }

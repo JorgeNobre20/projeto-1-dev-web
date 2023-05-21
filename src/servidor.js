@@ -65,27 +65,7 @@ import multerIMPORT from "multer";
 import { VeiculosFuncoes } from "./database/veiculos.js";
 import { rotasAdmin } from "./rotas/admin.js";
 const multer = multerIMPORT;
-
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    //pasta de destino
-    cb(null, "public/images/");
-  },
-  filename: function (req, file, cb) {
-    // Extração da extensão do arquivo original:
-    const extensaoArquivo = file.originalname.split(".")[1];
-
-    // Cria um código randômico que será o nome do arquivo
-    //const novoNomeArquivo = require('crypto')
-    //  .randomBytes(64)
-    //.toString('hex');
-
-    // Indica o novo nome do arquivo:
-    cb(null, `${file.originalname.split(".")[0]}.${extensaoArquivo}`);
-  },
-});
-
-const upload = multer({ storage });
+const upload = multer({});
 
 //tudo da parte de loja
 app.get("/admin/loja", async (request, response) => {
@@ -107,9 +87,6 @@ app.post(
   "/admin/loja/add-veiculo",
   upload.single("filepond"),
   async (req, res, next) => {
-    //console.log(req.file)
-
-    let src = "/images/" + req.file.filename;
 
     //gerador de hex id
     var mongoObjectId = function () {
@@ -130,7 +107,7 @@ app.post(
       marca: req.body.marca,
       cor: req.body.cor,
       diaria: req.body.diaria,
-      foto: src,
+      foto: req.body.foto,
       status: 1,
     });
     if (veiculos) {
@@ -161,28 +138,14 @@ app.get("/editVeiculo", async (req, res) => {
 });
 
 app.post("/editVeiculo", upload.single("filepond"), async (req, res) => {
-	let veiculo;
-
-	if (req.file != undefined) {
-		let src = "/images/" + req.file.filename;
-
-		veiculo = await VeiculosFuncoes.updateVeiculo({
+		let veiculo = await VeiculosFuncoes.updateVeiculo({
 			_id: req.body._id,
 			nome: req.body.nome,
 			marca: req.body.marca,
 			cor: req.body.cor,
 			diaria: req.body.diaria,
-			foto: src,
+			foto: req.body.foto,
 		});
-	} else {
-		veiculo = await VeiculosFuncoes.updateVeiculo({
-			_id: req.body._id,
-			nome: req.body.nome,
-			marca: req.body.marca,
-			cor: req.body.cor,
-			diaria: req.body.diaria,
-		});
-	}
 
 	if (veiculo) {
 		res.redirect("/admin/loja");

@@ -9,23 +9,19 @@
   <title>Página Inicial</title>
 
   <style>
+    .image{
+        height: 200px;
+        width: auto;
+    }
+
+    .image img{
+        height: 100%;
+        width: 100%;
+        border-radius: 10px;
+    }
+
     .header-logo{
       margin-right: 50px;
-    }
-
-    .infos{
-            margin-top: 10rem;
-    }
-
-    .img{
-      height: 20px;
-      width: 20px;
-    }
-
-    img{
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
     }
   </style>
 
@@ -70,11 +66,14 @@
             <!-- Colocar foto do carro de fundo -->
             <div class="card card-cover h-150 overflow-hidden text-bg-dark rounded-4 shadow-lg" style="background-image: url('../../public<%= veiculo.foto %>');">
               <div class="d-flex flex-column h-50 p-5 pb-3 text-white text-shadow-1 text-center infos">
-                <h3 class="display-6 lh-1 fw-bold"><%= veiculo.nome %></h3>
+                <div class="image">
+                  <img class="" src="<%= veiculo.foto %>" alt="Foto do carro">
+                </div>
+                <h3 class="display-6 lh-1 fw-bold mt-3"><%= veiculo.nome %></h3>
                 <h3 class="mb-2"><%= veiculo.marca%>, <%= veiculo.cor%>,<%= veiculo.valor%></h3>
                 <h4 class="mb-2">Valor Diária: <%= veiculo.diaria %></h4>
                 <h6 class="mb-2">Status: <%= veiculo.status == 1 ? "Disponivel" : "Indisponivel"%></h6>  
-                <h6 class="mb-2"><%= veiculo.status == 0 ? "Disponivel em : DATA" : ""%></h6>    
+                <h6 class="mb-2"><%= veiculo.status == 0 ? "Disponivel em : DATA" : "Disponivel em : HOJE"%></h6>    
               </div>
             </div>
           </div>

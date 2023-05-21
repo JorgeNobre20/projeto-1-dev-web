@@ -8,9 +8,16 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
     <title>Admin-Loja</title>
     <style>
-        .infos{
-            margin-top: 10rem;
-        }
+      .image{
+        height: 200px;
+        width: auto;
+      }
+
+      .image img{
+        height: 100%;
+        width: 100%;
+        Border-radius: 10px;
+      }
     </style>
 </head>
 <body>
@@ -48,14 +55,17 @@
               <!-- Colocar foto do carro de fundo -->
               <div class="card card-cover h-150 overflow-hidden text-bg-dark rounded-4 shadow-lg" style="background-image: url('../../public<%= veiculo.foto %>');">
                 <div class="d-flex flex-column h-50 p-5 pb-3 text-white text-shadow-1 text-center infos">
-                  <h3 class="display-6 lh-1 fw-bold"><%= veiculo.nome %></h3>
+                  <div class="image">
+                    <img class="" src="<%= veiculo.foto %>" alt="Foto do carro">
+                  </div>
+                  <h3 class="display-6 lh-1 fw-bold mt-3"><%= veiculo.nome %></h3>
                   <h3 class="mb-2"><%= veiculo.marca%>, <%= veiculo.cor%>,<%= veiculo.valor%></h3>
                   <h4 class="mb-2">Valor Diária: <%= veiculo.diaria %></h4>
                   <h6 class="mb-2">Status: <%= veiculo.status == 1 ? "Disponivel" : "Indisponivel" %></h6>  
-                  <h6 class="mb-2"><%= veiculo.status == 0 ? "Disponivel em : DATA" : ""%></h6>
+                  <h6 class="mb-2"><%= veiculo.status == 0 ? "Disponivel em : DATA" : "Disponivel em : HOJE"%></h6>
                 </div>
   
-                <div class="text-center">
+                <div class="text-center mb-3">
                   <a href="/editVeiculo?id=<%= veiculo._id %> " class="edit btn btn-primary">Editar</a>
 						      <a href="/deletarVeiculo?excluir=<%= veiculo._id %>"class="delete btn btn-danger" id="<%= veiculo._id %> ">Remover</a>
                 </div>

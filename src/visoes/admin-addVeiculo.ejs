@@ -58,31 +58,14 @@
             <input type="text" name="cor" id="cor" class="form-control" required />
         </div>
         <!-- Diária input -->
-        <div class="form-outline mb-4">
+        <div class="form-outline mb-2">
             <label for="diaria">Diária</label>
             <input type="number" name="diaria" id="diaria" min="0" class="form-control" required />
         </div>
         <!-- img input -->
-        <div class="form-outline mb-4">
-            <label for="filepond">Foto do carro</label>
-            <input
-                type="file"
-                class="filepond"
-                name="filepond"
-                id="upload"
-                data-max-files="1"
-                accept="image/png, image/jpeg"
-                class="form-control"
-                required
-            />
-        </div>
-        <div class="input">
-            <img
-                id="imgChooser"
-                src="#"
-                alt="descricao imagem blablal"
-                hidden
-            />
+        <div class="form-outline mb-2">
+            <label class="form-label" for="foto" id="foto" type="text">URL da Foto</label>
+            <input type="text" name="foto" id="foto" class="form-control" required />
         </div>
       
         <!-- Submit button -->
@@ -90,31 +73,5 @@
     </form>   
     
     <footer class="text-center">Projeto 1 de Web - Desenvolvido por <a href="">Jorge Nobre</a>, <a href="">Livian Torres</a>, <a href="">Samuel Lopes</a>, <a href="https://github.com/victor-joness">Victor Mesquita</a></footer>
-
-    <script>
-        function readImage() {
-            const img = document.getElementById("imgChooser");
-
-            console.log(img);
-
-            if (this.files && this.files[0]) {
-                var file = new FileReader();
-
-                file.onload = function (e) {
-                    img.src = e.target.result;
-                };
-
-                file.readAsDataURL(this.files[0]);
-
-                img.style.display = "block";
-                img.style.width = "490px";
-                img.style.heigth = "227px";
-            }
-        }
-
-        const inputFile = document.getElementById("upload");
-
-        inputFile.addEventListener("change", readImage, false);
-    </script>
 </body>
 </html>
