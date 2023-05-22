@@ -31,6 +31,83 @@ app.listen(PORTA_SERVIDOR, () => {
 
 
 
+/* Usuario - Cliente */
+import { UsuariosFuncoes } from "./database/clientes.js";
+
+app.get("/signin", (request, response) => {
+  response.render("cliente-entrar", {erros: []});
+});
+
+app.post("/signin", async (request, response)=>{
+  const usuarioBuscado = {email: request.body.email, senha: request.body.senha};
+  const usuariosBd = await UsuariosFuncoes.buscarUsuarios(); 
+  const usuarioEmail = usuariosBd.filter(usuario => usuario.email == usuarioBuscado.email);
+  const usuarioSenha = usuariosBd.filter(usuario => usuario.senha == usuarioBuscado.senha);
+
+  let erro = [];
+  if(usuarioEmail.length > 0 && usuarioSenha.length > 0){
+    response.redirect("/");
+
+  }else{
+    erro.push("Email ou senha incorretos");
+    response.render("cliente-entrar", {erros: erro});
+  }
+
+});
+
+app.get("/signup", (request, response) => {
+  response.render("cliente-cadastrar", {erros: []});
+});
+
+app.post("/signup", async (request, response) => {
+
+  let novoUsuario = {
+    nome: request.body.nome,
+    dataNascimento: request.body.dataNascimento,
+    genero: request.body.genero,
+    telefone: request.body.telefone,
+    email: request.body.email,
+    senha: request.body.senha
+  };
+
+  const usuariosBd = await UsuariosFuncoes.buscarUsuarios(); 
+  const usuarioExistente = usuariosBd.filter(usuario => usuario.email == novoUsuario.email);
+
+  let erro = []; 
+  const confirmarSenha = request.body.confirmarSenha;
+
+  if(usuarioExistente.length > 0){
+    erro.push("Email já cadastrado no sistema.");
+  }
+  if(confirmarSenha != novoUsuario.senha){
+    erro.push("Confirmação de senha diferente de senha.");
+  }
+
+  if(erro.length > 0){
+    response.render("cliente-cadastrar", {erros: erro});
+  }
+  else{
+    await UsuariosFuncoes.cadastrarUsuario(novoUsuario);
+    response.redirect("/signin");
+  }
+
+});
+
+
+app.get("/loja", async (request, response)=> {
+  const ListaDeveiculos = await VeiculosFuncoes.pegarVeiculos();
+  response.render("cliente-loja", {veiculos: ListaDeveiculos});
+});
+
+app.get("/loja/conta", (request, response)=>{
+  response.render("cliente-conta");
+});
+
+
+app.get("/loja/aluguel", (request, response)=>{
+  response.render("cliente-aluguel");
+});
+
 
 
 
