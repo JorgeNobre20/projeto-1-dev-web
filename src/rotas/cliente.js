@@ -50,4 +50,5 @@ rotasCliente.get("/loja/aluguel", (request, response)=>{
   response.render("cliente/cliente-aluguel");
 });
 
+
 export { rotasCliente };

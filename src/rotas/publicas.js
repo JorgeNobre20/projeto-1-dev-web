@@ -31,11 +31,11 @@ rotasPublicas.post("/signin", async (request, response)=>{
 
   let erro = [];
   if(usuarioEmail.length > 0 && usuarioSenha.length > 0){
-    response.redirect("/");
+    response.redirect("/loja");
 
   }else{
     erro.push("Email ou senha incorretos");
-    response.render("cliente-entrar", {erros: erro});
+    response.render("cliente/cliente-entrar", {erros: erro});
   }
 
 });
