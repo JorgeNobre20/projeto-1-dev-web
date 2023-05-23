@@ -1,0 +1,1 @@
+export { repositorioVeiculo } from "./RepositorioVeiculo.js";
