@@ -27,63 +27,46 @@
     </style>
 </head>
 <body>
-    <header class="p-3 text-bg-dark">
-        <div class="container">
-          <div class="d-flex flex-wrap align-items-center justify-content-between">
-            <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none header-logo">
-              <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-car-front"  viewBox="0 0 16 16">
-                <path d="M4 9a1 1 0 1 1-2 0 1 1 0 0 1 2 0Zm10 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0ZM6 8a1 1 0 0 0 0 2h4a1 1 0 1 0 0-2H6ZM4.862 4.276 3.906 6.19a.51.51 0 0 0 .497.731c.91-.073 2.35-.17 3.597-.17 1.247 0 2.688.097 3.597.17a.51.51 0 0 0 .497-.731l-.956-1.913A.5.5 0 0 0 10.691 4H5.309a.5.5 0 0 0-.447.276Z"/>
-                <path d="M2.52 3.515A2.5 2.5 0 0 1 4.82 2h6.362c1 0 1.904.596 2.298 1.515l.792 1.848c.075.175.21.319.38.404.5.25.855.715.965 1.262l.335 1.679c.033.161.049.325.049.49v.413c0 .814-.39 1.543-1 1.997V13.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1.338c-1.292.048-2.745.088-4 .088s-2.708-.04-4-.088V13.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1.892c-.61-.454-1-1.183-1-1.997v-.413a2.5 2.5 0 0 1 .049-.49l.335-1.68c.11-.546.465-1.012.964-1.261a.807.807 0 0 0 .381-.404l.792-1.848ZM4.82 3a1.5 1.5 0 0 0-1.379.91l-.792 1.847a1.8 1.8 0 0 1-.853.904.807.807 0 0 0-.43.564L1.03 8.904a1.5 1.5 0 0 0-.03.294v.413c0 .796.62 1.448 1.408 1.484 1.555.07 3.786.155 5.592.155 1.806 0 4.037-.084 5.592-.155A1.479 1.479 0 0 0 15 9.611v-.413c0-.099-.01-.197-.03-.294l-.335-1.68a.807.807 0 0 0-.43-.563 1.807 1.807 0 0 1-.853-.904l-.792-1.848A1.5 1.5 0 0 0 11.18 3H4.82Z"/>
-              </svg>
-            </a>
-    
+  <%- include("../partials/header-admin"); %>
 
-            <div class="text-end">
-              <a type="button" href="/admin/loja" class="btn btn-outline-light me-2">Loja</a> 
-              <a type="button" href="/admin/aluguel" class="btn btn-outline-light me-2">Aluguel</a>
+  <div class="container px-4 py-5" id="custom-cards">
+    <div class="d-flex justify-content-between">
+        <h2 class="pb-2 border-bottom">Lista de Carros</h2>
+        <a type="button" href="/admin/loja/add-veiculo" class="btn btn-primary mt-2 mb-2">Adicionar Carro</a>
+    </div>
+
+    <div class="row row-cols-1 row-cols-lg-3 align-items-stretch g-4 py-5">
+      <% veiculos.forEach(veiculo =>{ %>
+        <div class="col">
+          <div class="card card-cover h-150 overflow-hidden text-bg-dark rounded-4 shadow-lg">
+            <div class="d-flex flex-column h-50 p-5 pb-3 text-white text-shadow-1 text-center infos">
+              <div class="image">
+                <img src="<%= veiculo.foto %>" alt="Foto do carro">
+              </div>
+              <h3 class="display-6 lh-1 fw-bold mt-3"><%= veiculo.nome %></h3>
+              <h3 class="mb-2"><%= veiculo.marca%>, <%= veiculo.cor%>,<%= veiculo.valor%></h3>
+              <h4 class="mb-2">Valor Diária: <%= veiculo.diaria %></h4>
+              <h6 class="mb-2">Status: <%= veiculo.status == 1 ? "Disponivel" : "Indisponivel" %></h6>  
+              <h6 class="mb-2"><%= veiculo.status == 0 ? "Disponivel em : DATA" : "Disponivel em : HOJE"%></h6>
+            </div>
+
+            <div class="text-center mb-3">
+              <a href="/admin/editVeiculo?id=<%= veiculo._id %> " class="edit btn btn-primary">Editar</a>
+              <a href="/admin/deletarVeiculo?excluir=<%= veiculo._id %>"class="delete btn btn-danger" id="<%= veiculo._id %> ">Remover</a>
             </div>
           </div>
         </div>
-      </header>
+      <%}) %>
+    </div>
+  </div>
 
-      <div class="container px-4 py-5" id="custom-cards">
-        <div class="d-flex justify-content-between">
-            <h2 class="pb-2 border-bottom">Lista de Carros</h2>
-            <a type="button" href="/admin/loja/add-veiculo" class="btn btn-primary mt-2 mb-2">Adicionar Carro</a>
-        </div>
-    
-        <div class="row row-cols-1 row-cols-lg-3 align-items-stretch g-4 py-5">
-          <% veiculos.forEach(veiculo =>{ %>
-            <div class="col">
-              <div class="card card-cover h-150 overflow-hidden text-bg-dark rounded-4 shadow-lg">
-                <div class="d-flex flex-column h-50 p-5 pb-3 text-white text-shadow-1 text-center infos">
-                  <div class="image">
-                    <img src="<%= veiculo.foto %>" alt="Foto do carro">
-                  </div>
-                  <h3 class="display-6 lh-1 fw-bold mt-3"><%= veiculo.nome %></h3>
-                  <h3 class="mb-2"><%= veiculo.marca%>, <%= veiculo.cor%>,<%= veiculo.valor%></h3>
-                  <h4 class="mb-2">Valor Diária: <%= veiculo.diaria %></h4>
-                  <h6 class="mb-2">Status: <%= veiculo.status == 1 ? "Disponivel" : "Indisponivel" %></h6>  
-                  <h6 class="mb-2"><%= veiculo.status == 0 ? "Disponivel em : DATA" : "Disponivel em : HOJE"%></h6>
-                </div>
+  <footer class="text-center">Projeto 1 de Web - Desenvolvido por <a href="">Jorge Nobre</a>, <a href="">Livian Torres</a>, <a href="">Samuel Lopes</a>, <a href="https://github.com/victor-joness">Victor Mesquita</a></footer>
+
   
-                <div class="text-center mb-3">
-                  <a href="/admin/editVeiculo?id=<%= veiculo._id %> " class="edit btn btn-primary">Editar</a>
-						      <a href="/admin/deletarVeiculo?excluir=<%= veiculo._id %>"class="delete btn btn-danger" id="<%= veiculo._id %> ">Remover</a>
-                </div>
-              </div>
-            </div>
-          <%}) %>
-        </div>
-      </div>
-    
-      <footer class="text-center">Projeto 1 de Web - Desenvolvido por <a href="">Jorge Nobre</a>, <a href="">Livian Torres</a>, <a href="">Samuel Lopes</a>, <a href="https://github.com/victor-joness">Victor Mesquita</a></footer>
-
-      
-      <script 
-        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" 
-        integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" 
-        crossorigin="anonymous"
-      ></script>
+  <script 
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" 
+    integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" 
+    crossorigin="anonymous"
+  ></script>
 </body>
 </html>
