@@ -2,8 +2,37 @@ import { Router } from "express";
 
 import { repositorioVeiculo } from "../repositorios/index.js";
 import { carregarTodosAlugueis } from "../casos-de-uso/index.js";
-
+import { repositorioAdmin } from "../repositorios/RepositorioAdmin.js";
+ 
 const rotasAdmin = Router();
+
+rotasAdmin.get("/", (request, response) => {
+  let message = " "  
+  response.render("admin/login", { message })
+})
+
+rotasAdmin.post("/", async (request, response) => {
+  let email = request.body.email;
+  let senha = request.body.senha;
+
+  let admin = await repositorioAdmin.buscarPorEmail(email);
+
+  let message;
+
+  if(admin){
+    if(admin.senha == senha){
+      return response.redirect("admin/loja")
+    }
+
+    message = "Senha incorreta!"
+
+    response.render("admin/login", { message })
+  }else{
+    message = "Não existe um usuário com o email informado!"
+
+    response.render("admin/login", { message })
+  }
+})
 
 rotasAdmin.get("/aluguel", (request, response) => {
   const alugueis = carregarTodosAlugueis();
