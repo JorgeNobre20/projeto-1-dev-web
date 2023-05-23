@@ -20,7 +20,7 @@ rotasPublicas.get("/erro", (request, response) => {
 });
 
 rotasPublicas.get("/signin", (request, response) => {
-  response.render("/cliente/cliente-entrar", {erros: []});
+  response.render("cliente/cliente-entrar", {erros: []});
 });
 
 rotasPublicas.post("/signin", async (request, response)=>{
@@ -41,7 +41,7 @@ rotasPublicas.post("/signin", async (request, response)=>{
 });
 
 rotasPublicas.get("/signup", (request, response) => {
-  response.render("/cliente/cliente-cadastrar", {erros: []});
+  response.render("cliente/cliente-cadastrar", {erros: []});
 });
 
 rotasPublicas.post("/signup", async (request, response) => {
@@ -68,7 +68,7 @@ rotasPublicas.post("/signup", async (request, response) => {
   }
 
   if(erro.length > 0){
-    response.render("/cliente/cliente-cadastrar", {erros: erro});
+    response.render("cliente/cliente-cadastrar", {erros: erro});
   }
   else{
     await repositorioCliente.cadastrarUsuario(novoUsuario);
