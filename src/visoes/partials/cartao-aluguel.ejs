@@ -8,13 +8,13 @@
         style="cursor: pointer;"
         onclick="preencherModalDetalhesCarro(<%= JSON.stringify(aluguel) %>)"
       >
-        ID do Aluguel: <%= aluguel.id %>
+        ID do Aluguel: <%= aluguel._id %>
       </span>
 
       <img 
-        src="<%= aluguel.carro.urlImagem %>" 
+        src="<%= aluguel.carro.foto %>" 
         class="img-fluid rounded" 
-        alt="Foto do carro"
+        alt="Foto do <%= aluguel.carro.nome %>"
         style="height: 14rem; object-fit: cover;"
       />
     </div>
@@ -23,10 +23,11 @@
       <div class="h-100 d-flex justify-content-between py-2">
         <div class="px-3 h-100 d-flex flex-column justify-content-between" style="width: 70%;">
           <div>
-            <h5 class="card-title mb-3"><%= aluguel.carro.modelo %></h5>
+            <h5 class="card-title mb-3"><%= aluguel.carro.nome %></h5>
             <p class="card-text m-0"> <strong>Cliente: </strong><%= aluguel.cliente.nome %></p>
             <p class="m-0 my-1"><strong>Período: </strong><%= aluguel.dataInicial %> até <%= aluguel.dataFinal %> ( <%= aluguel.numeroDiasAluguel %> dia(s) )</p>   
-            <p class="m-0"><strong>Valor da Diária: </strong>R$ <%= aluguel.carro.precoDiaria %></p>     
+            <p class="m-0"><strong>Valor da Diária: </strong>R$ <%= aluguel.carro.diaria %></p>     
+            <p class="m-0"><strong>Forma de Pagamento: </strong><%= aluguel.formaPagamento %></p>     
                    
           </div>
 
@@ -44,7 +45,7 @@
         <div class="d-flex flex-column justify-content-between px-3" style="width: 30%;">
           <div class="d-flex flex-column align-items-end">
             <p class="mb-0 fw-semibold text-secondary" style="font-size: 1rem;">Valor Total do Aluguel</p>
-            <strong class="fs-4">R$ <%= aluguel.carro.precoDiaria * aluguel.numeroDiasAluguel %></strong>
+            <strong class="fs-4">R$ <%= aluguel.carro.diaria * aluguel.numeroDiasAluguel %></strong>
           </div>
           <div class="d-flex flex-column">  
             

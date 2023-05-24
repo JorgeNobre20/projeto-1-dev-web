@@ -28,7 +28,7 @@
                 <h4 class="mb-2">Valor Diária: <%= veiculo.diaria %></h4>
                 <h6 class="mb-2">Status: <%= veiculo.status == 1 ? "Disponivel" : "Indisponivel"%></h6>  
                 <h6 class="mb-2"><%= veiculo.status == 0 ? "Disponivel em : DATA" : "Disponivel em : HOJE"%></h6>
-                <a href="/loja/alugar" type="button" class="btn btn-success ms-2 btn-sm w-100">Alugar</a>
+                <a href="/loja/alugar/<%= veiculo.id %>" type="button" class="btn btn-success ms-2 btn-sm w-100">Alugar</a>
               </div>
             </div>
           </div>

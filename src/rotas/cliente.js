@@ -1,8 +1,9 @@
 import { Router } from "express";
 
 import { buscarCarroPorId, buscarUltimosAlugueisPorCarro } from "../casos-de-uso/index.js";
-import { repositorioVeiculo } from "../repositorios/index.js";
+import { repositorioAluguel, repositorioVeiculo } from "../repositorios/index.js";
 import { repositorioUsuario } from "../repositorios/RepositorioUsuario.js";
+import { registrarAluguel } from "../casos-de-uso/registrar-aluguel.js";
 
 const rotasCliente = Router();
 
@@ -22,13 +23,15 @@ rotasCliente.get("/loja/conta-senha", (request, response) => {
   response.render("cliente/cliente-senha-conta", {})
 })
 
-rotasCliente.get("/loja/alugar/:idCarro", (request, response) => {
+rotasCliente.get("/loja/alugar/:idCarro", async (request, response) => {
   const idCarro = request.params.idCarro;
-  const carroSelecionado = buscarCarroPorId(idCarro);
+  const mensagemErro = request.query.mensagemErro;
+
+  const carroSelecionado = await buscarCarroPorId(idCarro);
 
   if(!carroSelecionado){
     const mensagem = "Erro ao encontrar carro selecionado para aluguel";
-    response.redirect(`/erro?mensagem=${mensagem}`);
+    return response.redirect(`/erro?mensagem=${mensagem}`);
   }
 
   const ultimosAlugueisCarro = buscarUltimosAlugueisPorCarro(idCarro);
@@ -36,9 +39,50 @@ rotasCliente.get("/loja/alugar/:idCarro", (request, response) => {
   response.render("cliente/solicitacao-aluguel", 
     { 
       carroSelecionado, 
-      ultimosAlugueis: ultimosAlugueisCarro 
+      ultimosAlugueis: ultimosAlugueisCarro,
+      mensagemErro
     }
   );
+});
+
+rotasCliente.post("/solicitar-aluguel/:idCarro", async (request, response) => {
+  const idCarro = request.params.idCarro;
+
+  const formaPagamento = request.body.formaPagamento;
+  const dataInicialAluguel = request.body.dataInicial;
+  const dataFinalAluguel = request.body.dataFinal;
+
+  const carroSelecionado = await buscarCarroPorId(idCarro);
+
+  if(!carroSelecionado){
+    const mensagem = "Erro ao encontrar carro selecionado para aluguel";
+    response.redirect(`/erro?mensagem=${mensagem}`);
+  }
+
+  const aluguelExistenteCujoIntervaloContemIntervaloECarroSelecionado = await repositorioAluguel.buscarAlgumCujoIntervaloContemIntervaloECarro(
+    dataInicialAluguel,
+    dataFinalAluguel,
+    idCarro
+  );
+  
+  if(aluguelExistenteCujoIntervaloContemIntervaloECarroSelecionado){
+    const mensagem = "Já existe um aluguel registrado no intervalo de datas selecionado";
+    return response.redirect(`/loja/alugar/${idCarro}?mensagemErro=${mensagem}`);
+  }
+
+  try {
+    await registrarAluguel({
+      idCarro, 
+      idCliente: "8e5a4d56-fb4c-47f9-b669-96a6c6c38767",
+      formaPagamento,
+      dataInicial: dataInicialAluguel,
+      dataFinal: dataFinalAluguel,
+    });
+
+    response.redirect("/loja");
+  } catch (error) {
+    response.redirect(`/loja/alugar/${idCarro}?mensagemErro=${error.message}`);
+  }
 });
 
 rotasCliente.get("/loja", async (request, response)=> {
