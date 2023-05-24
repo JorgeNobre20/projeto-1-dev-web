@@ -52,7 +52,7 @@
     <% } %>
 
     <% alugueis.forEach((aluguel)=> { %>
-      <%- include("../partials/cartao-aluguel", { aluguel }); %>
+      <%- include("../partials/cartao-aluguel", { aluguel, admin: true }); %>
     <% }) %>
   </div>
 

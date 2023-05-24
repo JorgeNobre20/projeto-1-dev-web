@@ -1,6 +1,6 @@
 import { bancoDeDados } from "../banco-de-dados/banco-de-dados.js";
 import { StatusAluguel } from "../enums/index.js";
-import { GeradorId } from "../servicos/index.js";
+import { ServicoGeradorId } from "../servicos/index.js";
 
 class RepositorioAluguel{
 	async buscarAlgumCujoIntervaloContemIntervaloECarro(dataInicial, dataFinal, idCarro){
@@ -43,7 +43,7 @@ class RepositorioAluguel{
 		const colecaoAlugueis = bancoDeDados.obterReferenciaColecao("alugueis");
 		
 		await colecaoAlugueis.insertOne({
-			id: GeradorId.gerarId(),
+			id: ServicoGeradorId.gerarId(),
 			idCarro,
 			idCliente,
 			formaPagamento,
@@ -78,6 +78,36 @@ class RepositorioAluguel{
 		return alugueis;
 	}
 
+	async buscarTodosPorClienteUnindoClienteECarro(idCliente){
+		const colecaoAlugueis = bancoDeDados.obterReferenciaColecao("alugueis");
+
+		const alugueis = await colecaoAlugueis.aggregate([
+			{
+				"$lookup": {
+					"from": "usuarios",
+					"localField": "idCliente",
+					"foreignField": "id",
+					"as": "cliente"
+				}
+			},
+			{
+				"$lookup": {
+					"from": "veiculos",
+					"localField": "idCarro",
+					"foreignField": "id",
+					"as": "carro"
+				}
+			},
+			{ 
+				"$match": { 
+					idCliente 
+				} 
+			}
+		]).toArray();
+
+		return alugueis;
+	}
+
 	async atualizarStatusAluguel(idAluguel, status){
 		const colecaoAlugueis = bancoDeDados.obterReferenciaColecao("alugueis");
 
@@ -94,6 +124,16 @@ class RepositorioAluguel{
 	async buscarPorId(id){
 		const aluguel = await bancoDeDados.obterReferenciaColecao("alugueis").findOne({ id });
 		return aluguel;
+	}
+
+	async buscarUltimosAlugueis(idCarro){
+		const ultimosAlugueis = await bancoDeDados.obterReferenciaColecao("alugueis")
+			.find({ idCarro })
+			.sort({ _id: -1 })
+			.limit(3)
+			.toArray();
+			
+		return ultimosAlugueis;
 	}
 }
 

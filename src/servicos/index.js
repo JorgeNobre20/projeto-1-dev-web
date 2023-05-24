@@ -1,2 +1,3 @@
 export { ServicoData } from "./ServicoData.js";
-export { GeradorId } from "./GeradorId.js";
+export { ServicoGeradorId } from "./ServicoGeradorId.js";
+export { ServicoAluguel } from "./ServicoAluguel.js";

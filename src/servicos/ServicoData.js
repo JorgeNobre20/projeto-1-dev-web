@@ -1,4 +1,4 @@
-import { format, differenceInDays } from "date-fns";
+import { format, differenceInDays, addHours } from "date-fns";
 import { ptBR } from "date-fns/locale/index.js";
 
 export const FormatoData = {
@@ -24,6 +24,12 @@ class ServicoData {
 
   static obterNumeroDiasEntreDatas(dataInicial, dataFinal){
     return differenceInDays(dataFinal, dataInicial);
+  }
+
+  static instanciarDataComFusoHorarioBrasileiro(data){
+    const instanciaData = new Date(data);
+    const dataComFusoHorario = addHours(instanciaData, 3);
+    return dataComFusoHorario;
   }
 }
 

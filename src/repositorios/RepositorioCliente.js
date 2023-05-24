@@ -1,13 +1,12 @@
-import { ObjectId } from "mongodb";
 import { bancoDeDados } from "../banco-de-dados/banco-de-dados.js"
-import { GeradorId } from "../servicos/index.js";
+import { ServicoGeradorId } from "../servicos/index.js";
 
 class RepositorioCliente {
   async cadastrarUsuario(usuario) {
     try {
       await bancoDeDados.obterReferenciaColecao("usuarios").insertOne({
         ...usuario,
-        id: GeradorId.gerarId()
+        id: ServicoGeradorId.gerarId()
       });
       return true;
     } catch (error) {

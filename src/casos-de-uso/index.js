@@ -4,3 +4,4 @@ export { buscarUltimosAlugueisPorCarro } from "./buscar-ultimos-alugueis-por-car
 export { aprovarAluguel } from "./aprovar-aluguel.js";
 export { rejeitarAluguel } from "./rejeitar-aluguel.js";
 export { registrarAluguel } from "./registrar-aluguel.js";
+export { buscarAlugueisPorCliente } from "./buscar-alugueis-por-clinete.js";

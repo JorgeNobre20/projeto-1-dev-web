@@ -24,7 +24,11 @@
         <div class="px-3 h-100 d-flex flex-column justify-content-between" style="width: 70%;">
           <div>
             <h5 class="card-title mb-3"><%= aluguel.carro.nome %></h5>
-            <p class="card-text m-0"> <strong>Cliente: </strong><%= aluguel.cliente.nome %></p>
+            
+            <% if(admin){ %>
+              <p class="card-text m-0"> <strong>Cliente: </strong><%= aluguel.cliente.nome %></p>
+            <% } %>
+            
             <p class="m-0 my-1"><strong>Período: </strong><%= aluguel.dataInicial %> até <%= aluguel.dataFinal %> ( <%= aluguel.numeroDiasAluguel %> dia(s) )</p>   
             <p class="m-0"><strong>Valor da Diária: </strong>R$ <%= aluguel.carro.diaria %></p>     
             <p class="m-0"><strong>Forma de Pagamento: </strong><%= aluguel.formaPagamento %></p>     
@@ -76,7 +80,7 @@
               </div>
             <% } %>
 
-            <% if(aluguel.status === "PENDENTE"){ %>
+            <% if(aluguel.status === "PENDENTE" && admin){ %>
               <div class="d-flex">
                 <button type="button" class="btn btn-success btn-sm w-50">
                   <a class="nav-link" href="/admin/aluguel/aprovar/<%= aluguel.id %>">Confirmar</a>

@@ -1,5 +1,5 @@
 import { bancoDeDados } from "../banco-de-dados/banco-de-dados.js";
-import { GeradorId } from "../servicos/index.js";
+import { ServicoGeradorId } from "../servicos/index.js";
 
 class RepositorioVeiculo{
   async pegarVeiculos() {
@@ -20,7 +20,7 @@ class RepositorioVeiculo{
 	async inserirVeiculo(dados) {
 		await bancoDeDados.obterReferenciaColecao("veiculos").insertOne({ 
 			...dados,
-			id: GeradorId.gerarId(),
+			id: ServicoGeradorId.gerarId(),
 			diaria: Number(dados.diaria)
 		}); 
 		return true; 

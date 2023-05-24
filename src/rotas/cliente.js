@@ -1,8 +1,16 @@
 import { Router } from "express";
 
-import { buscarCarroPorId, buscarUltimosAlugueisPorCarro } from "../casos-de-uso/index.js";
-import { repositorioAluguel, repositorioVeiculo } from "../repositorios/index.js";
-import { registrarAluguel } from "../casos-de-uso/registrar-aluguel.js";
+import { 
+  buscarAlugueisPorCliente, 
+  buscarCarroPorId, 
+  buscarUltimosAlugueisPorCarro,
+  registrarAluguel
+} from "../casos-de-uso/index.js";
+import { 
+  repositorioAluguel, 
+  repositorioVeiculo 
+} from "../repositorios/index.js";
+import { StatusAluguel } from "../enums/StatusAluguel.js";
 
 const rotasCliente = Router();
 
@@ -42,7 +50,7 @@ rotasCliente.get("/loja/alugar/:idCarro", async (request, response) => {
     return response.redirect(`/erro?mensagem=${mensagem}`);
   }
 
-  const ultimosAlugueisCarro = buscarUltimosAlugueisPorCarro(idCarro);
+  const ultimosAlugueisCarro = await buscarUltimosAlugueisPorCarro(idCarro);
 
   response.render("cliente/solicitacao-aluguel",
     {
@@ -54,6 +62,7 @@ rotasCliente.get("/loja/alugar/:idCarro", async (request, response) => {
 });
 
 rotasCliente.post("/solicitar-aluguel/:idCarro", async (request, response) => {
+  const idCliente = request.session.usuario[0].id;
   const idCarro = request.params.idCarro;
 
   const formaPagamento = request.body.formaPagamento;
@@ -73,7 +82,7 @@ rotasCliente.post("/solicitar-aluguel/:idCarro", async (request, response) => {
     idCarro
   );
 
-  if (aluguelExistenteCujoIntervaloContemIntervaloECarroSelecionado) {
+  if (aluguelExistenteCujoIntervaloContemIntervaloECarroSelecionado && aluguelExistenteCujoIntervaloContemIntervaloECarroSelecionado.status !== StatusAluguel.REJEITADO) {
     const mensagem = "Já existe um aluguel registrado no intervalo de datas selecionado";
     return response.redirect(`/loja/alugar/${idCarro}?mensagemErro=${mensagem}`);
   }
@@ -81,7 +90,7 @@ rotasCliente.post("/solicitar-aluguel/:idCarro", async (request, response) => {
   try {
     await registrarAluguel({
       idCarro,
-      idCliente: "8e5a4d56-fb4c-47f9-b669-96a6c6c38767",
+      idCliente,
       formaPagamento,
       dataInicial: dataInicialAluguel,
       dataFinal: dataFinalAluguel,
@@ -98,8 +107,14 @@ rotasCliente.get("/loja", async (request, response) => {
   response.render("cliente/cliente-loja", { veiculos: ListaDeveiculos });
 });
 
-rotasCliente.get("/loja/aluguel", (request, response) => {
-  response.render("cliente/cliente-aluguel");
+rotasCliente.get("/loja/aluguel", async (request, response) => {
+  const idCliente = request.session.usuario[0].id;
+  const alugueisCliente = await buscarAlugueisPorCliente(idCliente);
+
+  response.render("cliente/cliente-aluguel", { 
+    mensagemErro: null,
+    alugueis: alugueisCliente
+  });
 });
 
 rotasCliente.get("/sair", (request, response) => {
