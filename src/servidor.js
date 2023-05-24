@@ -1,8 +1,9 @@
 import express from "express";
 import cookieSession from "cookie-session";
 
-import { rotasAdmin, rotasCliente, rotasPublicas } from "./rotas/index.js";
 import { bancoDeDados } from "./banco-de-dados/banco-de-dados.js";
+import { rotasAdmin, rotasCliente, rotasPublicas } from "./rotas/index.js";
+import { middlewareAutenticacaoUsuario } from "./middlewares/index.js";
 
 const app = express();
 const PORTA_SERVIDOR = 3000;
@@ -22,7 +23,7 @@ app.set("views", "./src/visoes");
 
 // Rotas
 app.use(rotasPublicas);
-app.use(rotasCliente);
+app.use(middlewareAutenticacaoUsuario, rotasCliente);
 app.use("/admin", rotasAdmin);
 
 bancoDeDados.conectar().then(() => {

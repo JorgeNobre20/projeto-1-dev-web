@@ -1,0 +1,1 @@
+export { middlewareAutenticacaoUsuario } from "./middlewareAutenticacaoUsuario.js";

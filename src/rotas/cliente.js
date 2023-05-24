@@ -7,38 +7,28 @@ import { registrarAluguel } from "../casos-de-uso/registrar-aluguel.js";
 const rotasCliente = Router();
 
 rotasCliente.get("/loja/conta", (request, response) => {
-  if(request.session.usuario){
-    let usuarioSession = request.session.usuario;
-    response.render("cliente/cliente-conta", { usuario: usuarioSession[0] });
-  }else{
-    response.redirect("/signin");
-  }
+  let usuarioSession = request.session.usuario;
+  response.render("cliente/cliente-conta", { usuario: usuarioSession[0] });
 })
 
 rotasCliente.post("/loja/conta", (request, response) => { // Atualizar dados conta usuario
-  if(request.body.senha){ // Caso a requisição venha para alterar senha
-    
-  }else{ // Caso a requisição venha para editar os dados do usuário
+  if (request.body.senha) { // Caso a requisição venha para alterar senha
+
+  } else { // Caso a requisição venha para editar os dados do usuário
 
   }
   response.render("cliente/cliente-conta", { usuario: {} })
 })
 
 rotasCliente.get("/loja/conta-editar", (request, response) => {
-  if(request.session.usuario){
-    let usuarioSession = request.session.usuario;
-    response.render("cliente/cliente-editar-conta", { usuario: usuarioSession[0] });
-  }else{
-    response.redirect("/signin");
-  }
-})
+  let usuarioSession = request.session.usuario;
+  response.render("cliente/cliente-editar-conta", { usuario: usuarioSession[0] });
+});
 
 rotasCliente.get("/loja/conta-senha", (request, response) => {
-  if(request.session.usuario){
-    response.render("cliente/cliente-senha-conta", {});
-  }else{
-    response.redirect("/signin");
-  }
+
+  response.render("cliente/cliente-senha-conta", {});
+
 })
 
 rotasCliente.get("/loja/alugar/:idCarro", async (request, response) => {
@@ -47,18 +37,16 @@ rotasCliente.get("/loja/alugar/:idCarro", async (request, response) => {
 
   const carroSelecionado = await buscarCarroPorId(idCarro);
 
-  if(!carroSelecionado){
+  if (!carroSelecionado) {
     const mensagem = "Erro ao encontrar carro selecionado para aluguel";
     return response.redirect(`/erro?mensagem=${mensagem}`);
   }
 
+  const ultimosAlugueisCarro = buscarUltimosAlugueisPorCarro(idCarro);
 
-    const ultimosAlugueisCarro = buscarUltimosAlugueisPorCarro(idCarro);
-  
-
-  response.render("cliente/solicitacao-aluguel", 
-    { 
-      carroSelecionado, 
+  response.render("cliente/solicitacao-aluguel",
+    {
+      carroSelecionado,
       ultimosAlugueis: ultimosAlugueisCarro,
       mensagemErro
     }
@@ -74,7 +62,7 @@ rotasCliente.post("/solicitar-aluguel/:idCarro", async (request, response) => {
 
   const carroSelecionado = await buscarCarroPorId(idCarro);
 
-  if(!carroSelecionado){
+  if (!carroSelecionado) {
     const mensagem = "Erro ao encontrar carro selecionado para aluguel";
     response.redirect(`/erro?mensagem=${mensagem}`);
   }
@@ -84,15 +72,15 @@ rotasCliente.post("/solicitar-aluguel/:idCarro", async (request, response) => {
     dataFinalAluguel,
     idCarro
   );
-  
-  if(aluguelExistenteCujoIntervaloContemIntervaloECarroSelecionado){
+
+  if (aluguelExistenteCujoIntervaloContemIntervaloECarroSelecionado) {
     const mensagem = "Já existe um aluguel registrado no intervalo de datas selecionado";
     return response.redirect(`/loja/alugar/${idCarro}?mensagemErro=${mensagem}`);
   }
 
   try {
     await registrarAluguel({
-      idCarro, 
+      idCarro,
       idCliente: "8e5a4d56-fb4c-47f9-b669-96a6c6c38767",
       formaPagamento,
       dataInicial: dataInicialAluguel,
@@ -105,22 +93,18 @@ rotasCliente.post("/solicitar-aluguel/:idCarro", async (request, response) => {
   }
 });
 
-rotasCliente.get("/loja", async (request, response)=> {
-  if(request.session.usuario){
-    const ListaDeveiculos = await repositorioVeiculo.pegarVeiculos();
-    response.render("cliente/cliente-loja", {veiculos: ListaDeveiculos});
-  }else{
-    response.redirect("/signin");
-  }
+rotasCliente.get("/loja", async (request, response) => {
+  const ListaDeveiculos = await repositorioVeiculo.pegarVeiculos();
+  response.render("cliente/cliente-loja", { veiculos: ListaDeveiculos });
 });
 
-rotasCliente.get("/loja/aluguel", (request, response)=>{
-  if(request.session.usuario){
-    response.render("cliente/cliente-aluguel");
-  }else{
-    response.redirect("/signin");
-  }
+rotasCliente.get("/loja/aluguel", (request, response) => {
+  response.render("cliente/cliente-aluguel");
 });
 
+rotasCliente.get("/sair", (request, response) => {
+  request.session.usuario = null;
+  response.redirect("/");
+});
 
 export { rotasCliente };
