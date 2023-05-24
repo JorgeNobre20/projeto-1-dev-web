@@ -16,37 +16,37 @@
   <div class="w-25 text-center m-auto pt-3">
     <div class="form-outline mb-2">
       <label class="form-label" for="nome" id="nome" type="text">Nome Completo:</label>
-      <input type="text" name="nome" id="nome" class="form-control" disabled />
+      <input type="text" name="nome" id="nome" class="form-control" value="<%= usuario.nome %>" disabled />
     </div>
 
     <div class="form-outline mb-2">
       <label class="form-label" for="data-nascimento" id="data-nascimento">Data de Nascimento:</label>
-      <input type="date" name="data-nascimento" id="data-nascimento" class="form-control" disabled/>
+      <input type="date" name="data-nascimento" id="data-nascimento" class="form-control" value="<%= usuario.dataNascimento %>" disabled/>
     </div>
       
     <div class="form-outline mb-2">
       <label class="form-label" for="genero" id="genero" type="text">Gênero:</label>
       <div class="form-outline">
         <span style="margin-right: 10px;">
-          <input type="radio" name="genero" value="Masculino" id="genero" class="form-check-input" disabled /><span style="margin-left: 5px;"  >Masculino</span>
+          <input type="radio" name="genero" value="Masculino" id="genero" class="form-check-input" disabled <% if(usuario.genero == "masculino") { %> checked <% } %> /><span style="margin-left: 5px;">Masculino</span>
         </span>
         <span style="margin-right: 10px;">
-          <input type="radio" name="genero" value="Feminino" id="genero" class="form-check-input" disabled /><span style="margin-left: 5px;">Feminino</span>
+          <input type="radio" name="genero" value="Feminino" id="genero" class="form-check-input" disabled <% if(usuario.genero == "feminino") { %> checked <% } %> /><span style="margin-left: 5px;">Feminino</span>
         </span>
         <span style="margin-right: 10px;">
-          <input type="radio" name="genero" value="Outro" id="genero" class="form-check-input" disabled /><span style="margin-left: 5px;">Outro</span>
+          <input type="radio" name="genero" value="Outro" id="genero" class="form-check-input" disabled <% if(usuario.genero != "masculino" && usuario.genero != "feminino") { %> checked <% } %> /><span style="margin-left: 5px;">Outro</span>
         </span>
       </div>
     </div>
 
     <div class="form-outline mb-2">
       <label for="telefone">Telefone:</label>
-      <input type="text" name="telefone" id="telefone" class="form-control" disabled />
+      <input type="tel" name="telefone" id="telefone" class="form-control" value="<%= usuario.telefone %>" disabled />
     </div>
 
     <div class="form-outline mb-2">
       <label class="form-label" for="email" id="email" type="text">Email:</label>
-      <input type="email" name="email" id="email" class="form-control" disabled />
+      <input type="email" name="email" id="email" class="form-control" value="<%= usuario.email %>" disabled />
     </div>
       
     <div class="form-outline mt-4 mb-5">

@@ -1,4 +1,5 @@
 import express from "express";
+import cookieSession from "cookie-session";
 
 import { rotasAdmin, rotasCliente, rotasPublicas } from "./rotas/index.js";
 import { bancoDeDados } from "./banco-de-dados/banco-de-dados.js";
@@ -9,6 +10,11 @@ const PORTA_SERVIDOR = 3000;
 // Middlewares
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
+app.use(cookieSession({
+  name: 'session',
+  secret: 'c293x8b6234z82n938246bc2938x4zb234',
+  maxAge: 24 * 60 * 60 * 1000 // 24 hours
+}))
 
 // Template Engine
 app.set("view engine", "ejs");
