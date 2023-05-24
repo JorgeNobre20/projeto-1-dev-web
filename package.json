@@ -11,6 +11,7 @@
   "author": "Jorge Nobre, Livian Torres, Samuel Lopes, Victor Mesquita",
   "license": "ISC",
   "dependencies": {
+    "cookie-session": "^2.0.0",
     "date-fns": "^2.30.0",
     "ejs": "^3.1.9",
     "express": "^4.18.2",
