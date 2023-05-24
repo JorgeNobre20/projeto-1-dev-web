@@ -53,7 +53,7 @@ class RepositorioAluguel{
 		});
 	}
 
-	async buscarTodosUnindoClienteECarros(){
+	async buscarTodosUnindoClienteECarro(){
 		const colecaoAlugueis = bancoDeDados.obterReferenciaColecao("alugueis");
 
 		const alugueis = await colecaoAlugueis.aggregate([

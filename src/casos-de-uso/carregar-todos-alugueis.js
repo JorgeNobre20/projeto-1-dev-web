@@ -4,7 +4,7 @@ import { ServicoData } from "../servicos/index.js";
 import { FormatoData } from "../servicos/ServicoData.js";
 
 export async function carregarTodosAlugueis(){
-  const alugueis = await repositorioAluguel.buscarTodosUnindoClienteECarros();
+  const alugueis = await repositorioAluguel.buscarTodosUnindoClienteECarro();
   
   const alugueisFormatados = alugueis.map((aluguel) => {
     const instanciaDataInicial = new Date(aluguel.dataInicial);
