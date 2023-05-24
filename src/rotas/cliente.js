@@ -2,7 +2,6 @@ import { Router } from "express";
 
 import { buscarCarroPorId, buscarUltimosAlugueisPorCarro } from "../casos-de-uso/index.js";
 import { repositorioAluguel, repositorioVeiculo } from "../repositorios/index.js";
-import { repositorioUsuario } from "../repositorios/RepositorioUsuario.js";
 import { registrarAluguel } from "../casos-de-uso/registrar-aluguel.js";
 
 const rotasCliente = Router();
