@@ -1,5 +1,5 @@
-import { ObjectId } from "mongodb";
 import { bancoDeDados } from "../banco-de-dados/banco-de-dados.js";
+import { GeradorId } from "../servicos/index.js";
 
 class RepositorioVeiculo{
   async pegarVeiculos() {
@@ -7,19 +7,28 @@ class RepositorioVeiculo{
 		return veiculos;
 	}
 
+	async buscarPorId(id){
+		const veiculo = await bancoDeDados.obterReferenciaColecao("veiculos").findOne({ id });
+		return veiculo;
+	}
+
 	async deletarVeiculo(id) {
-		await bancoDeDados.obterReferenciaColecao("veiculos").deleteOne({ _id: new ObjectId(id) });
+		await bancoDeDados.obterReferenciaColecao("veiculos").deleteOne({ id });
 		return true;
 	}
 
 	async inserirVeiculo(dados) {
-		await bancoDeDados.obterReferenciaColecao("veiculos").insertOne(dados); 
+		await bancoDeDados.obterReferenciaColecao("veiculos").insertOne({ 
+			...dados,
+			id: GeradorId.gerarId(),
+			diaria: Number(dados.diaria)
+		}); 
 		return true; 
 	}
 	
 	async updateVeiculo(veiculo){
 		await bancoDeDados.obterReferenciaColecao("veiculos").updateOne(
-			{ "_id": new ObjectId(veiculo._id) },
+			{ id: veiculo.id },
 			{ $set: {
 				nome: veiculo.nome, 
 				marca: veiculo.marca, 

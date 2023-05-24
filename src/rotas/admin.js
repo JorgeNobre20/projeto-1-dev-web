@@ -34,8 +34,8 @@ rotasAdmin.post("/", async (request, response) => {
   }
 })
 
-rotasAdmin.get("/aluguel", (request, response) => {
-  const alugueis = carregarTodosAlugueis();
+rotasAdmin.get("/aluguel", async (request, response) => {
+  const alugueis = await carregarTodosAlugueis();
   response.render("admin/alugueis", { alugueis });
 });
 
@@ -82,14 +82,14 @@ rotasAdmin.get("/editVeiculo", async (req, res) => {
 	let veiculos = await repositorioVeiculo.pegarVeiculos();
 	let id = req.query.id;
 
-  let veiculoEditar = veiculos.filter((veiculo) => veiculo._id == id)[0];
+  let veiculoEditar = veiculos.filter((veiculo) => veiculo.id == id)[0];
 
 	res.render("admin/admin-editVeiculo", { veiculoEditar, id });
 });
 
 rotasAdmin.post("/editVeiculo", async (req, res) => {
   let veiculo = await repositorioVeiculo.updateVeiculo({
-    _id: req.body._id,
+    id: req.body.id,
     nome: req.body.nome,
     marca: req.body.marca,
     cor: req.body.cor,
