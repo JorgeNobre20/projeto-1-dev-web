@@ -77,6 +77,24 @@ class RepositorioAluguel{
 
 		return alugueis;
 	}
+
+	async atualizarStatusAluguel(idAluguel, status){
+		const colecaoAlugueis = bancoDeDados.obterReferenciaColecao("alugueis");
+
+		await colecaoAlugueis.updateOne(
+			{ id: idAluguel },
+			{ 
+				$set: {
+					status
+				} 
+			}
+		);
+	}
+
+	async buscarPorId(id){
+		const aluguel = await bancoDeDados.obterReferenciaColecao("alugueis").findOne({ id });
+		return aluguel;
+	}
 }
 
 export const repositorioAluguel = new RepositorioAluguel();

@@ -11,9 +11,6 @@ export async function registrarAluguel(dadosEntrada){
   } = dadosEntrada;
 
   const carroSelecionado = await buscarCarroPorId(idCarro);
-  
-  console.log({ idCliente })
-
   const cliente = await repositorioCliente.buscarPorId(idCliente);
   
   if(!carroSelecionado){

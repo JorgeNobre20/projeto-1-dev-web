@@ -58,7 +58,7 @@
               </div>
             <% } %>
 
-            <% if(aluguel.status === "CONFIRMADO"){ %>
+            <% if(aluguel.status === "APROVADO"){ %>
               <div class="alert alert-success d-flex align-items-center p-0 py-1 px-2 mb-2" role="alert">
                 <i class="bi-check-circle-fill me-2" style="font-size: 0.8rem;"></i>
                 <span style="font-size: 0.8rem;"> 
@@ -78,8 +78,12 @@
 
             <% if(aluguel.status === "PENDENTE"){ %>
               <div class="d-flex">
-                <button type="button" class="btn btn-success btn-sm w-50">Confirmar</button>
-                <button type="button" class="btn btn-danger ms-2 btn-sm w-50">Rejeitar</button>
+                <button type="button" class="btn btn-success btn-sm w-50">
+                  <a class="nav-link" href="/admin/aluguel/aprovar/<%= aluguel.id %>">Confirmar</a>
+                </button>
+                <button type="button" class="btn btn-danger ms-2 btn-sm w-50">
+                  <a class="nav-link" href="/admin/aluguel/rejeitar/<%= aluguel.id %>">Rejeitar</a>
+                </button>
               </div>
             <% } %>
           

@@ -45,6 +45,12 @@
   <div class="container px-4 py-5" id="custom-cards">
     <h2 class="pb-2 border-bottom">Lista de Aluguéis</h2>
 
+    <% if(mensagemErro){ %>
+      <div class="alert alert-danger w-100" role="alert">
+        <%= mensagemErro %>
+      </div>
+    <% } %>
+
     <% alugueis.forEach((aluguel)=> { %>
       <%- include("../partials/cartao-aluguel", { aluguel }); %>
     <% }) %>

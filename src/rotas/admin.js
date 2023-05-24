@@ -1,7 +1,7 @@
 import { Router } from "express";
 
 import { repositorioVeiculo } from "../repositorios/index.js";
-import { carregarTodosAlugueis } from "../casos-de-uso/index.js";
+import { aprovarAluguel, carregarTodosAlugueis, rejeitarAluguel } from "../casos-de-uso/index.js";
 import { repositorioAdmin } from "../repositorios/RepositorioAdmin.js";
  
 const rotasAdmin = Router();
@@ -35,8 +35,10 @@ rotasAdmin.post("/", async (request, response) => {
 })
 
 rotasAdmin.get("/aluguel", async (request, response) => {
+  const mensagemErro = request.query.mensagemErro;
+
   const alugueis = await carregarTodosAlugueis();
-  response.render("admin/alugueis", { alugueis });
+  response.render("admin/alugueis", { alugueis, mensagemErro });
 });
 
 rotasAdmin.get("/loja", async (request, response) => {
@@ -102,6 +104,28 @@ rotasAdmin.post("/editVeiculo", async (req, res) => {
 	} else {
 		res.render("/admin-addVeiculo");
 	}
+});
+
+rotasAdmin.get("/aluguel/aprovar/:idAluguel", async (request, response) => {
+  const idAluguel = request.params.idAluguel;
+
+  try {
+    await aprovarAluguel(idAluguel);
+    response.redirect("/admin/aluguel");
+  } catch (error) {
+    response.redirect(`/admin/aluguel/?mensagemErro=${error.message}`);
+  }
+});
+
+rotasAdmin.get("/aluguel/rejeitar/:idAluguel", async (request, response) => {
+  const idAluguel = request.params.idAluguel;
+
+  try {
+    await rejeitarAluguel(idAluguel);
+    response.redirect("/admin/aluguel");
+  } catch (error) {
+    response.redirect(`/admin/aluguel/?mensagemErro=${error.message}`);
+  }
 });
 
 export { rotasAdmin };
