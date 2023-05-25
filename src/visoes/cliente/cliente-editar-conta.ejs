@@ -42,15 +42,15 @@
       <label class="form-label" for="genero" id="genero" type="text">Gênero:</label>
       <div class="form-outline">
         <span style="margin-right: 10px;">
-          <input type="radio" name="genero" value="Masculino" id="genero" class="form-check-input"
+          <input type="radio" name="genero" value="masculino" id="genero" class="form-check-input"
           <% if(usuario.genero == "masculino") { %> checked <% } %> /><span style="margin-left: 5px;"  >Masculino</span>
         </span>
         <span style="margin-right: 10px;">
-          <input type="radio" name="genero" value="Feminino" id="genero" class="form-check-input" 
+          <input type="radio" name="genero" value="feminino" id="genero" class="form-check-input" 
           <% if(usuario.genero == "feminino") { %> checked <% } %> /><span style="margin-left: 5px;">Feminino</span>
         </span>
         <span style="margin-right: 10px;">
-          <input type="radio" name="genero" value="Outro" id="genero" class="form-check-input"
+          <input type="radio" name="genero" value="outro" id="genero" class="form-check-input"
           <% if(usuario.genero != "masculino" && usuario.genero != "feminino") { %> checked <% } %> /><span style="margin-left: 5px;">Outro</span>
         </span>
       </div>

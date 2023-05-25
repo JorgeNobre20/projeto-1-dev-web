@@ -28,13 +28,13 @@
       <label class="form-label" for="genero" id="genero" type="text">Gênero:</label>
       <div class="form-outline">
         <span style="margin-right: 10px;">
-          <input type="radio" name="genero" value="Masculino" id="genero" class="form-check-input" disabled <% if(usuario.genero == "masculino") { %> checked <% } %> /><span style="margin-left: 5px;">Masculino</span>
+          <input type="radio" name="genero" value="masculino" id="genero" class="form-check-input" disabled <% if(usuario.genero == "masculino") { %> checked <% } %> /><span style="margin-left: 5px;">Masculino</span>
         </span>
         <span style="margin-right: 10px;">
-          <input type="radio" name="genero" value="Feminino" id="genero" class="form-check-input" disabled <% if(usuario.genero == "feminino") { %> checked <% } %> /><span style="margin-left: 5px;">Feminino</span>
+          <input type="radio" name="genero" value="feminino" id="genero" class="form-check-input" disabled <% if(usuario.genero == "feminino") { %> checked <% } %> /><span style="margin-left: 5px;">Feminino</span>
         </span>
         <span style="margin-right: 10px;">
-          <input type="radio" name="genero" value="Outro" id="genero" class="form-check-input" disabled <% if(usuario.genero != "masculino" && usuario.genero != "feminino") { %> checked <% } %> /><span style="margin-left: 5px;">Outro</span>
+          <input type="radio" name="genero" value="outro" id="genero" class="form-check-input" disabled <% if(usuario.genero != "masculino" && usuario.genero != "feminino") { %> checked <% } %> /><span style="margin-left: 5px;">Outro</span>
         </span>
       </div>
     </div>
@@ -53,6 +53,12 @@
       <a type="button" href="/loja/conta-editar" class="btn btn-outline-primary">Editar Conta</a> 
       <a type="button" href="/loja/conta-senha" class="btn btn-outline-primary">Alterar Senha</a>
     </div>
+
+    <% if(message != " ") { %>
+      <div class="alert alert-success mt-5 p-2" role="alert" style="text-align: center;">
+        <span><%= message %></span>
+      </div>
+    <% } %> 
   </div> 
 
   <footer class="text-center mb-2">Projeto 1 de Web - Desenvolvido por <a href="">Jorge Nobre</a>, <a href="">Livian Torres</a>, <a href="">Samuel Lopes</a>, <a href="https://github.com/victor-joness">Victor Mesquita</a></footer>

@@ -31,8 +31,8 @@ rotasPublicas.post("/signin", async (request, response)=>{
 
   let erro = [];
   if(usuarioEmail.length > 0 && usuarioSenha.length > 0){
-    usuarioEmail.senha = null;
-    request.session.usuario = usuarioEmail;
+    usuarioEmail[0].senha = null;
+    request.session.usuario = usuarioEmail[0];
     response.redirect("/loja");
 
   }else{

@@ -6,31 +6,41 @@ import {
   buscarUltimosAlugueisPorCarro,
   registrarAluguel
 } from "../casos-de-uso/index.js";
-import { 
-  repositorioAluguel, 
-  repositorioVeiculo 
-} from "../repositorios/index.js";
 import { StatusAluguel } from "../enums/StatusAluguel.js";
+import { repositorioAluguel, repositorioVeiculo, repositorioCliente } from "../repositorios/index.js";
 
 const rotasCliente = Router();
 
 rotasCliente.get("/loja/conta", (request, response) => {
-  let usuarioSession = request.session.usuario;
-  response.render("cliente/cliente-conta", { usuario: usuarioSession[0] });
+  let usuario = request.session.usuario;
+  let message = " ";
+  response.render("cliente/cliente-conta", { usuario, message });
 })
 
-rotasCliente.post("/loja/conta", (request, response) => { // Atualizar dados conta usuario
+rotasCliente.post("/loja/conta", async (request, response) => { // Atualizar dados conta usuario
   if (request.body.senha) { // Caso a requisição venha para alterar senha
 
   } else { // Caso a requisição venha para editar os dados do usuário
+    let usuario = request.body;
+    usuario.id = request.session.id;
 
+    let situacaoUsuario = repositorioCliente.atualizarDadosUsuario(usuario);
+    let message;
+
+    if(situacaoUsuario){
+      message = "Dados atualizados com sucesso!"
+    }
+
+    usuario = await repositorioCliente.buscarPorId(usuario.id);
+    request.session.usuario = usuario;
+
+    response.render("cliente/cliente-conta", { usuario, message })
   }
-  response.render("cliente/cliente-conta", { usuario: {} })
 })
 
 rotasCliente.get("/loja/conta-editar", (request, response) => {
-  let usuarioSession = request.session.usuario;
-  response.render("cliente/cliente-editar-conta", { usuario: usuarioSession[0] });
+  let usuario = request.session.usuario;
+  response.render("cliente/cliente-editar-conta", { usuario });
 });
 
 rotasCliente.get("/loja/conta-senha", (request, response) => {

@@ -8,6 +8,8 @@ const rotasAdmin = Router();
 
 rotasAdmin.get("/", (request, response) => {
   let message = " "  
+
+  console.log("caiu aqui")
   response.render("admin/login", { message })
 })
 
@@ -21,6 +23,9 @@ rotasAdmin.post("/", async (request, response) => {
 
   if(admin){
     if(admin.senha == senha){
+      admin.senha = null;
+      request.session.admin = admin;
+
       return response.redirect("admin/loja")
     }
 

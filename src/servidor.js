@@ -3,7 +3,7 @@ import cookieSession from "cookie-session";
 
 import { bancoDeDados } from "./banco-de-dados/banco-de-dados.js";
 import { rotasAdmin, rotasCliente, rotasPublicas } from "./rotas/index.js";
-import { middlewareAutenticacaoUsuario } from "./middlewares/index.js";
+import { middlewareAutenticacaoUsuario, middlewareAutenticacaoAdmin } from "./middlewares/index.js";
 
 const app = express();
 const PORTA_SERVIDOR = 3000;
@@ -23,8 +23,9 @@ app.set("views", "./src/visoes");
 
 // Rotas
 app.use(rotasPublicas);
+app.use("/admin", middlewareAutenticacaoAdmin, rotasAdmin);
 app.use(middlewareAutenticacaoUsuario, rotasCliente);
-app.use("/admin", rotasAdmin);
+
 
 bancoDeDados.conectar().then(() => {
   app.listen(PORTA_SERVIDOR, () => {
