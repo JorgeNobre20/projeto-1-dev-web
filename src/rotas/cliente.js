@@ -86,7 +86,7 @@ rotasCliente.get("/loja/alugar/:idCarro", async (request, response) => {
 });
 
 rotasCliente.post("/solicitar-aluguel/:idCarro", async (request, response) => {
-  const idCliente = request.session.usuario[0].id;
+  const idCliente = request.session.usuario.id;
   const idCarro = request.params.idCarro;
 
   const formaPagamento = request.body.formaPagamento;
