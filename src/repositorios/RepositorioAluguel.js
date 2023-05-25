@@ -24,7 +24,8 @@ class RepositorioAluguel{
 						},
 					]
 				},
-				{ idCarro }
+				{ idCarro },
+				{ status: { $ne: StatusAluguel.REJEITADO }  }
 			]
 		});
 
@@ -128,7 +129,7 @@ class RepositorioAluguel{
 
 	async buscarUltimosAlugueis(idCarro){
 		const ultimosAlugueis = await bancoDeDados.obterReferenciaColecao("alugueis")
-			.find({ idCarro })
+			.find({ idCarro, status: { $ne: StatusAluguel.REJEITADO } })
 			.sort({ _id: -1 })
 			.limit(3)
 			.toArray();
