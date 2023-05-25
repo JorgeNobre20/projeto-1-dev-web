@@ -99,4 +99,9 @@ rotasAdmin.get("/aluguel/rejeitar/:idAluguel", async (request, response) => {
   }
 });
 
+rotasAdmin.get("/sair", (request, response) => {
+  request.session.admin = null;
+  response.redirect("/");
+});
+
 export { rotasAdmin };

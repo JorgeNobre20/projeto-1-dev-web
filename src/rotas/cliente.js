@@ -23,10 +23,6 @@ rotasCliente.post("/loja/conta", async (request, response) => { // Atualizar dad
   let message;
   let erro;
 
-  console.log("Dados do usuario - 1")
-  console.log(usuario)
-  console.log(request.session.usuario)
-
   if(usuario.senhaNova){
     if(usuario.senha == request.session.usuario.senha){
       repositorioCliente.atualizarSenhaUsuario(usuario);

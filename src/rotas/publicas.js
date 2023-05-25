@@ -100,13 +100,11 @@ rotasPublicas.post("/admin", async (request, response) => {
     }
 
     message = "Senha incorreta!"
-
-    response.render("admin/login", { message })
   }else{
     message = "Não existe um usuário com o email informado!"
-
-    response.render("admin/login", { message })
   }
+
+  response.render("admin/login", { message })
 });
 
 export { rotasPublicas };
