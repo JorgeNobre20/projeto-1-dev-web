@@ -1,6 +1,6 @@
 import { Router } from "express";
 
-import { repositorioCliente, repositorioVeiculo } from "../repositorios/index.js";
+import { repositorioCliente, repositorioVeiculo, repositorioAdmin } from "../repositorios/index.js";
 
 const rotasPublicas = Router();
 
@@ -79,7 +79,34 @@ rotasPublicas.post("/signup", async (request, response) => {
 });
 
 rotasPublicas.get("/admin", (request, response) => {
+  const message = request.query.message || null;
   response.render("admin/login", { message })
+});
+
+rotasPublicas.post("/admin", async (request, response) => {
+  let email = request.body.email;
+  let senha = request.body.senha;
+
+  let admin = await repositorioAdmin.buscarPorEmail(email);
+
+  let message;
+
+  if(admin){
+    if(admin.senha == senha){
+      admin.senha = null;
+      request.session.admin = admin;
+
+      return response.redirect("admin/loja")
+    }
+
+    message = "Senha incorreta!"
+
+    response.render("admin/login", { message })
+  }else{
+    message = "Não existe um usuário com o email informado!"
+
+    response.render("admin/login", { message })
+  }
 });
 
 export { rotasPublicas };
