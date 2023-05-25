@@ -47,7 +47,7 @@ rotasAdmin.get("/deletarVeiculo", async (req, res) => {
 	if (veiculo) {
 		res.redirect("/admin/loja");
 	} else {
-		res.render("/admin/admin-addVeiculo");
+    res.redirect("/admin/loja");
 	}
 });
 

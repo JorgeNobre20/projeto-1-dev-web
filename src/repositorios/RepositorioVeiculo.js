@@ -13,8 +13,14 @@ class RepositorioVeiculo{
 	}
 
 	async deletarVeiculo(id) {
-		await bancoDeDados.obterReferenciaColecao("veiculos").deleteOne({ id });
-		return true;
+		let veiculo = await bancoDeDados.obterReferenciaColecao("veiculos").findOne({ id });
+
+		if(veiculo.status == 0){
+			return false;
+		}else{
+			await bancoDeDados.obterReferenciaColecao("veiculos").deleteOne({ id });
+			return true;
+		}		
 	}
 
 	async inserirVeiculo(dados) {
@@ -39,6 +45,19 @@ class RepositorioVeiculo{
 		}); 
 		
 		return true; 
+	}
+
+	async updateStatusVeiculo(id, status, dataInicial, dataFim){	
+		await bancoDeDados.obterReferenciaColecao("veiculos").updateOne(
+			{ id: id },
+			{ $set: {
+				status: status,
+				AluguelDataInicial : dataInicial,
+				AluguelDataFim : dataFim
+			}
+		}); 
+		
+		return true;
 	}
 }
 

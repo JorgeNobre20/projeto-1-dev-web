@@ -65,7 +65,7 @@
                 <h3 class="mb-2"><%= veiculo.marca%>, <%= veiculo.cor%>,<%= veiculo.valor%></h3>
                 <h4 class="mb-2">Valor Diária: <%= veiculo.diaria %></h4>
                 <h6 class="mb-2">Status: <%= veiculo.status == 1 ? "Disponivel" : "Indisponivel"%></h6>  
-                <h6 class="mb-2"><%= veiculo.status == 0 ? "Disponivel em : DATA" : "Disponivel em : HOJE"%></h6>    
+                <h6 class="mb-2"><%= veiculo.status == 0 ? `Disponivel em : ${veiculo.AluguelDataFim} ` : "Disponivel em : HOJE" %></h6>    
               </div>
             </div>
           </div>
