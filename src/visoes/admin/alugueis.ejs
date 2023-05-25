@@ -45,6 +45,12 @@
   <div class="container px-4 py-5" id="custom-cards">
     <h2 class="pb-2 border-bottom">Lista de Aluguéis</h2>
 
+    <% if(alugueis.length <= 0){ %>
+      <div class="alert alert-secondary mt-5 text-center" role="alert">
+        Não há aluguéis solicitados
+      </div>
+    <% } %>
+
     <% if(mensagemErro){ %>
       <div class="alert alert-danger w-100" role="alert">
         <%= mensagemErro %>
