@@ -25,6 +25,13 @@
 
   <div class="container px-4 py-5" id="custom-cards">
     <h2 class="pb-2 border-bottom">Meus Aluguéis</h2>
+
+    <% if(alugueis.length <= 0){ %>
+      <div class="alert alert-secondary mt-4 text-center" role="alert">
+        Não há aluguéis solicitados
+      </div>
+    <% } %>
+  
     <% alugueis.forEach((aluguel)=> { %>
       <%- include("../partials/cartao-aluguel", { aluguel, admin: false }); %>
     <% }) %>
