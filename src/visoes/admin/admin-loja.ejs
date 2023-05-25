@@ -35,6 +35,12 @@
         <a type="button" href="/admin/loja/add-veiculo" class="btn btn-primary mt-2 mb-2">Adicionar Carro</a>
     </div>
 
+    <% if(veiculos.length <= 0){ %>
+      <div class="alert alert-secondary mt-5 text-center" role="alert">
+        Não há carros cadastrados
+      </div>
+    <% } %>
+
     <div class="row row-cols-1 row-cols-lg-3 align-items-stretch g-4 py-5">
       <% veiculos.forEach(veiculo =>{ %>
         <div class="col">
