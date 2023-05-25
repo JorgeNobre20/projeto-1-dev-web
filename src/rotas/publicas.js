@@ -1,10 +1,11 @@
 import { Router } from "express";
 
 import { repositorioCliente, repositorioVeiculo, repositorioAdmin } from "../repositorios/index.js";
+import { middlewareAutenticacao } from "../middlewares/index.js";
 
 const rotasPublicas = Router();
 
-rotasPublicas.get("/", async (request, response) => {
+rotasPublicas.get("/", middlewareAutenticacao, async (request, response) => {
   let veiculos = await repositorioVeiculo.pegarVeiculos();
   response.render("home", {veiculos});
 });
@@ -19,11 +20,11 @@ rotasPublicas.get("/erro", (request, response) => {
   response.render("erro", { mensagem: mensagemErro });
 });
 
-rotasPublicas.get("/signin", (request, response) => {
+rotasPublicas.get("/signin", middlewareAutenticacao, (request, response) => {
   response.render("cliente/cliente-entrar", {erros: []});
 });
 
-rotasPublicas.post("/signin", async (request, response)=>{
+rotasPublicas.post("/signin", middlewareAutenticacao, async (request, response)=>{
   const usuarioBuscado = {email: request.body.email, senha: request.body.senha};
   const usuariosBd = await repositorioCliente.buscarUsuarios(); 
   const usuarioEmail = usuariosBd.filter(usuario => usuario.email == usuarioBuscado.email);
@@ -39,13 +40,13 @@ rotasPublicas.post("/signin", async (request, response)=>{
     response.render("cliente/cliente-entrar", {erros: erro});
   }
 
-});
+}); 
 
-rotasPublicas.get("/signup", (request, response) => {
+rotasPublicas.get("/signup", middlewareAutenticacao, (request, response) => {
   response.render("cliente/cliente-cadastrar", {erros: []});
 });
 
-rotasPublicas.post("/signup", async (request, response) => {
+rotasPublicas.post("/signup", middlewareAutenticacao, async (request, response) => {
   let novoUsuario = {
     nome: request.body.nome,
     dataNascimento: request.body.dataNascimento,
@@ -78,12 +79,12 @@ rotasPublicas.post("/signup", async (request, response) => {
 
 });
 
-rotasPublicas.get("/admin", (request, response) => {
+rotasPublicas.get("/admin", middlewareAutenticacao, (request, response) => {
   const message = request.query.message || null;
   response.render("admin/login", { message })
 });
 
-rotasPublicas.post("/admin", async (request, response) => {
+rotasPublicas.post("/admin", middlewareAutenticacao, async (request, response) => {
   let email = request.body.email;
   let senha = request.body.senha;
 
