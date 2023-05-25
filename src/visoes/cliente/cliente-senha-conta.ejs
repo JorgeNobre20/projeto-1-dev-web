@@ -30,24 +30,24 @@
   <form class="w-25 text-center m-auto pt-3" method="POST" action="/loja/conta">
     <div class="form-outline mb-2">
       <label class="form-label" for="senha" id="senha">Senha Atual:</label>
-      <input type="password" name="senha" id="senha" class="form-control"/>
+      <input type="password" name="senha" id="senha" class="form-control" required />
     </div>
 
     <div class="form-outline mb-2">
-      <label class="form-label" for="senhaNova" id="senhaNova">Senha Nova:</label>
-      <input type="password" name="senhaNova" id="senhaNova" class="form-control"/>
+      <label class="form-label" for="senhaNova">Senha Nova:</label>
+      <input type="password" name="senhaNova" id="senhaNova" class="form-control" required/>
     </div>
 
     <div class="form-outline mb-2">
-      <label class="form-label" for="confirmacaoSenhaNova" id="confirmacaoSenhaNova">Confirmação de Senha Nova:</label>
-      <input type="password" name="confirmacaoSenhaNova" id="confirmacaoSenhaNova" class="form-control"/>
+      <label class="form-label" for="confirmacaoSenhaNova">Confirmação de Senha Nova:</label>
+      <input type="password" name="confirmacaoSenhaNova" id="confirmacaoSenhaNova" class="form-control" required />
     </div>
       
     <button type="submit" class="btn btn-primary mb-4 mt-4" id="botaoConclusao">Concluir Alterações</button>
   </form> 
 
   <div style="display: none;" class="alert alert-danger w-50 text-center m-auto p-2 mb-4" id="mensagemErroSenha" role="alert">
-    Senha e Confirmação de Senha tem que ser iguais!
+    Senha e confirmação de senha precisam ser iguais!
   </div>
 
   <footer class="text-center mb-2">Projeto 1 de Web - Desenvolvido por <a href="">Jorge Nobre</a>, <a href="">Livian Torres</a>, <a href="">Samuel Lopes</a>, <a href="https://github.com/victor-joness">Victor Mesquita</a></footer>

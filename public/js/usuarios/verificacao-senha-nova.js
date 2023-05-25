@@ -4,7 +4,20 @@ const botaoConclusao = document.getElementById("botaoConclusao");
 const mensagemErro = document.getElementById("mensagemErroSenha");
 
 window.onload = () => {
-	verificarSenhaEConfirmacaoSenha();
+	pegaValoresDeSenha();
+	pegaValoresDeConfirmacaoSenha();
+}
+
+function pegaValoresDeSenha(){
+	senhaNova.addEventListener("change", (event) => {
+		verificarSenhaEConfirmacaoSenha();
+	})
+}
+
+function pegaValoresDeConfirmacaoSenha(){
+	confirmacaoSenhaNova.addEventListener("change", (event) => {
+		verificarSenhaEConfirmacaoSenha();
+	})
 }
 
 function verificarSenhaEConfirmacaoSenha(){
