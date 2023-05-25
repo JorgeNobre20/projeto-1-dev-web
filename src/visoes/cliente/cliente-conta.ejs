@@ -49,18 +49,22 @@
       <input type="email" name="email" id="email" class="form-control" value="<%= usuario.email %>" disabled />
     </div>
       
-    <div class="form-outline mt-4 mb-5">
+    <div class="form-outline mt-4">
       <a type="button" href="/loja/conta-editar" class="btn btn-outline-primary">Editar Conta</a> 
       <a type="button" href="/loja/conta-senha" class="btn btn-outline-primary">Alterar Senha</a>
     </div>
 
-    <% if(message != " ") { %>
-      <div class="alert alert-success mt-5 p-2" role="alert" style="text-align: center;">
+    <% if(message != " " && erro == 0) { %>
+      <div class="alert alert-success mt-4 p-2" role="alert" style="text-align: center;">
         <span><%= message %></span>
       </div>
-    <% } %> 
+    <% }else if(message != " " && erro == 1){ %>
+      <div class="alert alert-danger mt-4 p-2 w-100" role="alert" style="text-align: center;">
+        <span><%= message %></span>
+      </div>
+    <% } %>
   </div> 
 
-  <footer class="text-center mb-2">Projeto 1 de Web - Desenvolvido por <a href="">Jorge Nobre</a>, <a href="">Livian Torres</a>, <a href="">Samuel Lopes</a>, <a href="https://github.com/victor-joness">Victor Mesquita</a></footer>
+  <footer class="text-center mb-2 mt-4">Projeto 1 de Web - Desenvolvido por <a href="">Jorge Nobre</a>, <a href="">Livian Torres</a>, <a href="">Samuel Lopes</a>, <a href="https://github.com/victor-joness">Victor Mesquita</a></footer>
 </body>
 </html>

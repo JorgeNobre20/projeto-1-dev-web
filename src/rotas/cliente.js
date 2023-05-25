@@ -14,28 +14,42 @@ const rotasCliente = Router();
 rotasCliente.get("/loja/conta", (request, response) => {
   let usuario = request.session.usuario;
   let message = " ";
-  response.render("cliente/cliente-conta", { usuario, message });
+  response.render("cliente/cliente-conta", { usuario, message, erro: 0 });
 })
 
 rotasCliente.post("/loja/conta", async (request, response) => { // Atualizar dados conta usuario
-  if (request.body.senha) { // Caso a requisição venha para alterar senha
+  let usuario = request.body;
+  usuario.id = request.session.usuario.id;
+  let message;
+  let erro;
 
-  } else { // Caso a requisição venha para editar os dados do usuário
-    let usuario = request.body;
-    usuario.id = request.session.id;
+  console.log("Dados do usuario - 1")
+  console.log(usuario)
+  console.log(request.session.usuario)
 
-    let situacaoUsuario = repositorioCliente.atualizarDadosUsuario(usuario);
-    let message;
+  if(usuario.senhaNova){
+    if(usuario.senha == request.session.usuario.senha){
+      repositorioCliente.atualizarSenhaUsuario(usuario);
+      message = "Senha alterada com sucesso!";
+    }else{
+      message = "Senha não alterada, pois a senha atual está incorreta!";
+      erro = 1;
 
-    if(situacaoUsuario){
-      message = "Dados atualizados com sucesso!"
+      usuario = request.session.usuario;
+
+      return response.render("cliente/cliente-conta", { usuario, message, erro });
     }
-
-    usuario = await repositorioCliente.buscarPorId(usuario.id);
-    request.session.usuario = usuario;
-
-    response.render("cliente/cliente-conta", { usuario, message })
+  }else{
+    repositorioCliente.atualizarDadosUsuario(usuario);
+    message = "Dados da conta alterados com sucesso!";
   }
+
+  usuario = await repositorioCliente.buscarPorId(request.session.usuario.id);
+  request.session.usuario = usuario;
+
+  erro = 0;
+
+  response.render("cliente/cliente-conta", { usuario, message, erro });
 })
 
 rotasCliente.get("/loja/conta-editar", (request, response) => {
@@ -118,7 +132,7 @@ rotasCliente.get("/loja", async (request, response) => {
 });
 
 rotasCliente.get("/loja/aluguel", async (request, response) => {
-  const idCliente = request.session.usuario[0].id;
+  const idCliente = request.session.usuario.id;
   const alugueisCliente = await buscarAlugueisPorCliente(idCliente);
 
   response.render("cliente/cliente-aluguel", { 

@@ -43,9 +43,15 @@
       <input type="password" name="confirmacaoSenhaNova" id="confirmacaoSenhaNova" class="form-control"/>
     </div>
       
-    <button type="submit" class="btn btn-primary mb-5 mt-4">Concluir Alterações</button>
+    <button type="submit" class="btn btn-primary mb-4 mt-4" id="botaoConclusao">Concluir Alterações</button>
   </form> 
 
+  <div style="display: none;" class="alert alert-danger w-50 text-center m-auto p-2 mb-4" id="mensagemErroSenha" role="alert">
+    Senha e Confirmação de Senha tem que ser iguais!
+  </div>
+
   <footer class="text-center mb-2">Projeto 1 de Web - Desenvolvido por <a href="">Jorge Nobre</a>, <a href="">Livian Torres</a>, <a href="">Samuel Lopes</a>, <a href="https://github.com/victor-joness">Victor Mesquita</a></footer>
+
+  <script type="module" src="../../js/usuarios/verificacao-senha-nova.js"></script>
 </body>
 </html>

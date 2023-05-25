@@ -32,28 +32,28 @@ class RepositorioCliente {
 
   async atualizarDadosUsuario(usuario){
     await bancoDeDados.obterReferenciaColecao("usuarios").updateOne(
-      { id: usuario.id },
-      { $set: {
-          nome: usuario.nome, 
-          dataNascimento: usuario.dataNascimento, 
-          genero: usuario.genero, 
-          telefone: usuario.telefone, 
-          email: usuario.email
-        }
-      }); 
-    
+    { id: usuario.id },
+    { $set: {
+        nome: usuario.nome, 
+        dataNascimento: usuario.dataNascimento, 
+        genero: usuario.genero, 
+        telefone: usuario.telefone, 
+        email: usuario.email
+      }
+    });
+
     return true; 
   }
 
   async atualizarSenhaUsuario(usuario){
     await bancoDeDados.obterReferenciaColecao("usuarios").updateOne(
-      { id: usuario.id },
-      { $set: {
-          senha: usuario.senha
-        }
-      }); 
-    
-    return true; 
+    { id: usuario.id },
+    { $set: {
+        senha: usuario.senhaNova
+      }
+    }); 
+
+    return true;
   }
 }
 
