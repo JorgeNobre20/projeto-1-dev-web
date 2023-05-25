@@ -6,13 +6,6 @@ import { repositorioAdmin } from "../repositorios/RepositorioAdmin.js";
  
 const rotasAdmin = Router();
 
-rotasAdmin.get("/", (request, response) => {
-  let message = " "  
-
-  console.log("caiu aqui")
-  response.render("admin/login", { message })
-})
-
 rotasAdmin.post("/", async (request, response) => {
   let email = request.body.email;
   let senha = request.body.senha;

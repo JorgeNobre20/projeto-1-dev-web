@@ -78,4 +78,8 @@ rotasPublicas.post("/signup", async (request, response) => {
 
 });
 
+rotasPublicas.get("/admin", (request, response) => {
+  response.render("admin/login", { message })
+});
+
 export { rotasPublicas };
