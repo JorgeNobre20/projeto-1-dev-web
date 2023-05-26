@@ -136,6 +136,14 @@ class RepositorioAluguel{
 			
 		return ultimosAlugueis;
 	}
+
+	async buscarTodosPorCarro(idCarro){
+		const alugueisCarro = await bancoDeDados.obterReferenciaColecao("alugueis").find({ 
+			idCarro
+		}).toArray();
+
+		return alugueisCarro;
+	}
 }
 
 export const repositorioAluguel = new RepositorioAluguel();

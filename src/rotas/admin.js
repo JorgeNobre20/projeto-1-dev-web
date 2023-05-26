@@ -1,6 +1,6 @@
 import { Router } from "express";
 
-import { repositorioVeiculo } from "../repositorios/index.js";
+import { repositorioAluguel, repositorioVeiculo } from "../repositorios/index.js";
 import { aprovarAluguel, carregarTodosAlugueis, rejeitarAluguel } from "../casos-de-uso/index.js";
 import { TipoUsuario } from "../enums/index.js";
  
@@ -14,8 +14,10 @@ rotasAdmin.get("/aluguel", async (request, response) => {
 });
 
 rotasAdmin.get("/loja", async (request, response) => {
+  const mensagemErro = request.query.mensagemErro;
+
   let veiculos = await repositorioVeiculo.pegarVeiculos();
-  response.render("admin/admin-loja", {veiculos, tipoUsuario: TipoUsuario.ADMIN });
+  response.render("admin/admin-loja", { veiculos, tipoUsuario: TipoUsuario.ADMIN, mensagemErro });
 });
 
 rotasAdmin.get("/loja/add-veiculo", async (request, response) => {
@@ -43,7 +45,16 @@ rotasAdmin.post(
 );
 
 rotasAdmin.get("/deletarVeiculo", async (req, res) => {
-  let veiculo = await repositorioVeiculo.deletarVeiculo(req.query.excluir);
+  const idCarro = req.query.excluir;
+
+  const alugueisCarro = await repositorioAluguel.buscarTodosPorCarro(idCarro);
+
+  if(alugueisCarro.length > 0){
+    const mensagemErro = "Não é possível deletar esse carro, pois existem aluguéis referentes a este carro";
+    return res.redirect(`/admin/loja?mensagemErro=${mensagemErro}`);
+  }
+
+  let veiculo = await repositorioVeiculo.deletarVeiculo(idCarro);
 
 	if (veiculo) {
 		res.redirect("/admin/loja");
