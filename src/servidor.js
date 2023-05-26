@@ -3,7 +3,7 @@ import cookieSession from "cookie-session";
 
 import { bancoDeDados } from "./banco-de-dados/banco-de-dados.js";
 import { rotasAdmin, rotasCliente, rotasPublicas } from "./rotas/index.js";
-import { middlewareAutenticacaoUsuario, middlewareAutenticacaoAdmin, middlewareAutenticacao } from "./middlewares/index.js";
+import { middlewareAutenticacaoUsuario, middlewareAutenticacaoAdmin } from "./middlewares/index.js";
 
 const app = express();
 const PORTA_SERVIDOR = 3000;

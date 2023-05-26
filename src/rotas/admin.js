@@ -2,6 +2,7 @@ import { Router } from "express";
 
 import { repositorioVeiculo } from "../repositorios/index.js";
 import { aprovarAluguel, carregarTodosAlugueis, rejeitarAluguel } from "../casos-de-uso/index.js";
+import { TipoUsuario } from "../enums/index.js";
  
 const rotasAdmin = Router();
 
@@ -14,7 +15,7 @@ rotasAdmin.get("/aluguel", async (request, response) => {
 
 rotasAdmin.get("/loja", async (request, response) => {
   let veiculos = await repositorioVeiculo.pegarVeiculos();
-  response.render("admin/admin-loja", {veiculos});
+  response.render("admin/admin-loja", {veiculos, tipoUsuario: TipoUsuario.ADMIN });
 });
 
 rotasAdmin.get("/loja/add-veiculo", async (request, response) => {

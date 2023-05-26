@@ -43,27 +43,7 @@
 
     <div class="row row-cols-1 row-cols-lg-3 align-items-stretch g-4 py-5">
       <% veiculos.forEach(veiculo =>{ %>
-        <div class="col">
-          <div class="card card-cover h-150 overflow-hidden text-bg-dark rounded-4 shadow-lg">
-            <div class="d-flex flex-column h-50 p-5 pb-3 text-white text-shadow-1 text-center infos">
-              <div class="image">
-                <img src="<%= veiculo.foto %>" alt="Foto do carro">
-              </div>
-              <h3 class="display-6 lh-1 fw-bold mt-3"><%= veiculo.nome %></h3>
-              <h3 class="mb-2"><%= veiculo.marca%>, <%= veiculo.cor%>,<%= veiculo.valor%></h3>
-              <h4 class="mb-2">Valor Diária: <%= veiculo.diaria %></h4>
-              <h6 class="mb-2">Status: <%= veiculo.status == 1 ? "Disponivel" : "Indisponivel" %></h6>  
-              <h6 class="mb-2"><%= veiculo.status == 0 ? `Disponivel em : ${veiculo.AluguelDataFim} ` : "Disponivel em : HOJE" %></h6>
-            </div>
-
-            <% if(veiculo.status === 1){ %>
-              <div class="text-center mb-3">
-                <a href="/admin/editVeiculo?id=<%= veiculo.id %> " class="edit btn btn-primary">Editar</a>
-                <a href="/admin/deletarVeiculo?excluir=<%= veiculo.id %>"class="delete btn btn-danger" id="<%= veiculo._id %> ">Remover</a>
-              </div>
-            <% } %>
-          </div>
-        </div>
+        <%- include("../partials/cartao-carro", { veiculo, tipoUsuario }); %>
       <%}) %>
     </div>
   </div>

@@ -1,13 +1,15 @@
 import { Router } from "express";
 
-import { repositorioCliente, repositorioVeiculo, repositorioAdmin } from "../repositorios/index.js";
+import { repositorioCliente, repositorioAdmin } from "../repositorios/index.js";
+import { carregarTodosCarros } from "../casos-de-uso/index.js";
 import { middlewareAutenticacao } from "../middlewares/index.js";
+import { TipoUsuario } from "../enums/index.js";
 
 const rotasPublicas = Router();
 
 rotasPublicas.get("/", middlewareAutenticacao, async (request, response) => {
-  let veiculos = await repositorioVeiculo.pegarVeiculos();
-  response.render("home", {veiculos});
+  let veiculos = await carregarTodosCarros();
+  response.render("home", {veiculos, tipoUsuario: TipoUsuario.ANONIMO });
 });
 
 rotasPublicas.get("/erro", (request, response) => {

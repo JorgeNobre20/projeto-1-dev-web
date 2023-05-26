@@ -1,4 +1,4 @@
-import { format, differenceInDays, addHours } from "date-fns";
+import { format, differenceInDays, addHours, isEqual, isBefore, isAfter  } from "date-fns";
 import { ptBR } from "date-fns/locale/index.js";
 
 export const FormatoData = {
@@ -28,9 +28,33 @@ class ServicoData {
 
   static instanciarDataComFusoHorarioBrasileiro(data){
     const instanciaData = new Date(data);
+
+    instanciaData.setUTCHours(0);
+    instanciaData.setMinutes(0);
+    instanciaData.setSeconds(0);
+
     const dataComFusoHorario = addHours(instanciaData, 3);
     return dataComFusoHorario;
   }
+
+  static dataEstaEntreDatas(data, dataInicial, dataFinal){
+    const dataInicialAnteriorOuIgualData = this.dataAnteriorOuIgual(dataInicial, data);
+    const dataFinalPosteriorOuIgualData = this.dataPosteriorOuIgual(dataFinal, data);
+
+    return (dataInicialAnteriorOuIgualData && dataFinalPosteriorOuIgualData);
+  }
+
+  static dataAnteriorOuIgual(data, dataComparacao){
+    return isEqual(data, dataComparacao) || isBefore(data, dataComparacao);
+  }
+
+  static dataPosteriorOuIgual(data, dataComparacao){
+    return isEqual(data, dataComparacao) || isAfter(data, dataComparacao);
+  }
+
+  static dataEPosterior(data, dataComparacao){
+    return isAfter(data, dataComparacao);
+  } 
 }
 
 export { ServicoData };
