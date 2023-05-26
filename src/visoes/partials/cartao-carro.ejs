@@ -1,10 +1,10 @@
 <div class="col">
-  <div class="card card-cover h-150 overflow-hidden text-bg-dark rounded-4 shadow-lg" style="background-image: url('../../public<%= veiculo.foto %>');">
+  <div class="card card-cover h-150 overflow-hidden text-bg-dark rounded-4 shadow-lg">
     <div class="d-flex flex-column h-50 p-5 pb-3 text-white text-shadow-1 text-center infos">
       <div class="image">
-        <img class="w-100 rounded-2 object-fit-cover" src="<%= veiculo.foto %>" alt="Foto do carro">
+        <img class="w-100 rounded-2 object-fit-cover" style="height: 10rem;" src="<%= veiculo.foto %>" alt="Foto do carro">
       </div>
-      <h3 class="display-6 lh-1 fw-bold mt-3 fs-5"><%= veiculo.nome %></h3>
+      <h3 class="display-6 lh-1 fw-bold mt-4 fs-5"><%= veiculo.nome %></h3>
       <h3 class="mb-2 fs-5"><%= veiculo.marca%>, <%= veiculo.cor%>,<%= veiculo.valor%></h3>
       <h3 class="mb-4 fs-5">Valor Diária: <%= veiculo.diaria %></h3>
 
