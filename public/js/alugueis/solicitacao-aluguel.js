@@ -1,5 +1,3 @@
-import * as dateFns from "https://cdn.jsdelivr.net/npm/date-fns@2.30.0/+esm";
-
 const inputPrecoDiaria = document.getElementById("inputPrecoDiaria");
 const inputValorTotalAluguel = document.getElementById("inputValorTotalAluguel");
 
@@ -17,7 +15,7 @@ window.onload = () => {
 }
 
 function definirDataPadraoInicialFinalAluguel(){
-  const dataPadraoInicialFinalAluguel = dateFns.format(new Date(), "yyyy-MM-dd");
+  const dataPadraoInicialFinalAluguel = dateFns.format(new Date(), "YYYY-MM-DD");
 
   inputDataInicialAluguel.setAttribute("value", dataPadraoInicialFinalAluguel);
   inputDataFinalAluguel.setAttribute("value", dataPadraoInicialFinalAluguel);
@@ -53,8 +51,8 @@ function aoAlterarIntervaloDatasAluguel(){
 }
 
 function intervaloAluguelInvalido(){
-  const dataInicialAluguel = dateFns.parseISO(inputDataInicialAluguel.value);
-  const dataFinalAluguel = dateFns.parseISO(inputDataFinalAluguel.value);
+  const dataInicialAluguel = inputDataInicialAluguel.value;
+  const dataFinalAluguel = inputDataFinalAluguel.value;
 
   return dateFns.isBefore(dataFinalAluguel, dataInicialAluguel);
 }
@@ -77,8 +75,8 @@ function atualizarValorTotalAluguel(){
 }
 
 function obterTotalDiasAluguel(){
-  const dataInicialAluguel = dateFns.parseISO(inputDataInicialAluguel.value);
-  const dataFinalAluguel = dateFns.parseISO(inputDataFinalAluguel.value);
+  const dataInicialAluguel = inputDataInicialAluguel.value;
+  const dataFinalAluguel = inputDataFinalAluguel.value;
 
   const totalDiasAluguel = dateFns.differenceInDays(dataFinalAluguel, dataInicialAluguel);
   return totalDiasAluguel + 1;
