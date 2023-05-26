@@ -130,7 +130,8 @@ rotasCliente.get("/loja/aluguel", async (request, response) => {
 
   response.render("cliente/cliente-aluguel", { 
     mensagemErro: null,
-    alugueis: alugueisCliente
+    alugueis: alugueisCliente,
+    tipoUsuario: TipoUsuario.CLIENTE
   });
 });
 

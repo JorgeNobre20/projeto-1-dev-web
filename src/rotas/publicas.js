@@ -77,7 +77,7 @@ rotasPublicas.post("/signup", middlewareAutenticacao, async (request, response) 
   }
   else{
     await repositorioCliente.cadastrarUsuario(novoUsuario);
-    await servicoEmail.enviarEmail(novoUsuario.email);
+    // await servicoEmail.enviarEmail(novoUsuario.email);
     response.redirect("/signin");
   }
 

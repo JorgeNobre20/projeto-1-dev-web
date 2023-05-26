@@ -46,15 +46,17 @@
               Ver Dados do Veículo
             </button> 
 
-            <button 
-              type="button" 
-              class="btn btn-secondary btn-sm"
-              data-bs-toggle="modal" 
-              data-bs-target="#modalDetalhesCliente"
-              onclick="preencherModalDetalhesCliente(<%= JSON.stringify(aluguel) %>)"
-            >
-              Ver Dados do Cliente
-            </button> 
+            <% if(tipoUsuario === "ADMIN") { %>
+              <button 
+                type="button" 
+                class="btn btn-secondary btn-sm"
+                data-bs-toggle="modal" 
+                data-bs-target="#modalDetalhesCliente"
+                onclick="preencherModalDetalhesCliente(<%= JSON.stringify(aluguel) %>)"
+              >
+                Ver Dados do Cliente
+              </button> 
+            <% } %>
           </div>
           
         </div>

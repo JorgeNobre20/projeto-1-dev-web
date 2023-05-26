@@ -10,7 +10,11 @@ rotasAdmin.get("/aluguel", async (request, response) => {
   const mensagemErro = request.query.mensagemErro;
 
   const alugueis = await carregarTodosAlugueis();
-  response.render("admin/alugueis", { alugueis, mensagemErro });
+  response.render("admin/alugueis", { 
+    alugueis, 
+    mensagemErro, 
+    tipoUsuario: TipoUsuario.ADMIN 
+  });
 });
 
 rotasAdmin.get("/loja", async (request, response) => {
