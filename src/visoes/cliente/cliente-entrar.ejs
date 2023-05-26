@@ -55,24 +55,27 @@
     <title>Entrar</title>
 </head>
 <body>
+    
     <div class="container">
         <form action="/signin" method="POST">
-        <h1>Entrar</h1>
+        <h1 class="mb-4">Entrar</h1>
+
+        <% if (erros && erros.length > 0) { %>
+          
+          <% erros.forEach(function(erro) { %>
+            <div class="alert alert-danger w-100" role="alert">
+              <%= erro %>
+            </div>
+          <% }); %>
+
+        <% } %>
+
         <br> 
         <label>Email:</label>
         <input type="email" name="email">
         <br>
         <label>Senha:</label>
         <input type="password" name="senha">
-         <% if (erros && erros.length > 0) { %>
-            <div class="error-message">
-                 <ul class="erros">
-                    <% erros.forEach(function(erro) { %>
-                        <li><%= erro %></li>
-                    <% }); %>
-                </ul>
-            </div>
-          <% } %>
         <button type="submit" class="btn btn-warning">Entrar</button>
         <p>Ou</p>
         <br>
