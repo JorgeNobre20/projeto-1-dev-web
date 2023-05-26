@@ -7,7 +7,7 @@ class RepositorioVeiculo{
 		return veiculos;
 	}
 
-	async buscarTodosUnindoAlugueis(){
+	async buscarTodosUnindoAlugueis(textoBuscado = ""){
 		const veiculos = await bancoDeDados.obterReferenciaColecao("veiculos").aggregate([
 			{
 			 "$lookup":  {
@@ -15,6 +15,14 @@ class RepositorioVeiculo{
 					"localField": "id",
 					"foreignField": "idCarro",
 					"as": "alugueis"
+				}
+			},
+			{
+				$match: { 
+					$or: [
+						{ nome : { "$regex" : textoBuscado, "$options" : "i" } },
+						{ marca: { "$regex" : textoBuscado, "$options" : "i" } }
+					]		
 				}
 			}
 		]).toArray();

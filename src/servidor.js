@@ -4,7 +4,6 @@ import cookieSession from "cookie-session";
 import { bancoDeDados } from "./banco-de-dados/banco-de-dados.js";
 import { rotasAdmin, rotasCliente, rotasPublicas } from "./rotas/index.js";
 import { middlewareAutenticacaoUsuario, middlewareAutenticacaoAdmin } from "./middlewares/index.js";
-import { servicoEmail } from "./servicos/ServicoEmail.js";
 
 const app = express();
 const PORTA_SERVIDOR = 3000;
@@ -16,7 +15,7 @@ app.use(cookieSession({
   name: 'session',
   secret: 'c293x8b6234z82n938246bc2938x4zb234',
   maxAge: 24 * 60 * 60 * 1000 // 24 hours
-}))
+}));
 
 // Template Engine
 app.set("view engine", "ejs");

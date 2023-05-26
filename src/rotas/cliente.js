@@ -113,8 +113,15 @@ rotasCliente.post("/solicitar-aluguel/:idCarro", async (request, response) => {
 });
 
 rotasCliente.get("/loja", async (request, response) => {
-  const ListaDeveiculos = await carregarTodosCarros();
-  response.render("cliente/cliente-loja", { veiculos: ListaDeveiculos, tipoUsuario: TipoUsuario.CLIENTE});
+  const textoBuscaModeloOuMarca = request.query.textoBuscaModeloOuMarca;
+
+  const ListaDeveiculos = await carregarTodosCarros(textoBuscaModeloOuMarca);
+  
+  response.render("cliente/cliente-loja", { 
+    veiculos: ListaDeveiculos, 
+    tipoUsuario: TipoUsuario.CLIENTE,
+    textoBuscaModeloOuMarca
+  });
 });
 
 rotasCliente.get("/loja/aluguel", async (request, response) => {

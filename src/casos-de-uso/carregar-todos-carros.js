@@ -3,8 +3,8 @@ import { repositorioVeiculo } from "../repositorios/RepositorioVeiculo.js";
 import { FormatoData } from "../servicos/ServicoData.js";
 import { ServicoData } from "../servicos/index.js";
 
-export async function carregarTodosCarros(){
-  const carrosComAlugueis = await repositorioVeiculo.buscarTodosUnindoAlugueis();
+export async function carregarTodosCarros(textoBuscado = ""){
+  const carrosComAlugueis = await repositorioVeiculo.buscarTodosUnindoAlugueis(textoBuscado);
 
   const carrosComStatus = carrosComAlugueis.map((carroComAlugueis) => {
     const alugueis = carroComAlugueis.alugueis;
