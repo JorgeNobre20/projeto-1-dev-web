@@ -97,17 +97,6 @@ rotasCliente.post("/solicitar-aluguel/:idCarro", async (request, response) => {
     response.redirect(`/erro?mensagem=${mensagem}`);
   }
 
-  const aluguelExistenteCujoIntervaloContemIntervaloECarroSelecionado = await repositorioAluguel.buscarAlgumCujoIntervaloContemIntervaloECarro(
-    dataInicialAluguel,
-    dataFinalAluguel,
-    idCarro
-  );
-
-  if (aluguelExistenteCujoIntervaloContemIntervaloECarroSelecionado && aluguelExistenteCujoIntervaloContemIntervaloECarroSelecionado.status !== StatusAluguel.REJEITADO) {
-    const mensagem = "Já existe um aluguel registrado no intervalo de datas selecionado";
-    return response.redirect(`/loja/alugar/${idCarro}?mensagemErro=${mensagem}`);
-  }
-
   try {
     await registrarAluguel({
       idCarro,
