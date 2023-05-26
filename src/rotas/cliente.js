@@ -4,10 +4,11 @@ import {
   buscarAlugueisPorCliente, 
   buscarCarroPorId, 
   buscarUltimosAlugueisPorCarro,
-  registrarAluguel
+  registrarAluguel,
+  carregarTodosCarros
 } from "../casos-de-uso/index.js";
-import { StatusAluguel } from "../enums/StatusAluguel.js";
-import { repositorioAluguel, repositorioVeiculo, repositorioCliente } from "../repositorios/index.js";
+import { StatusAluguel,TipoUsuario } from "../enums/index.js";
+import { repositorioAluguel, repositorioCliente } from "../repositorios/index.js";
 
 const rotasCliente = Router();
 
@@ -123,8 +124,8 @@ rotasCliente.post("/solicitar-aluguel/:idCarro", async (request, response) => {
 });
 
 rotasCliente.get("/loja", async (request, response) => {
-  const ListaDeveiculos = await repositorioVeiculo.pegarVeiculos();
-  response.render("cliente/cliente-loja", { veiculos: ListaDeveiculos });
+  const ListaDeveiculos = await carregarTodosCarros();
+  response.render("cliente/cliente-loja", { veiculos: ListaDeveiculos, tipoUsuario: TipoUsuario.CLIENTE});
 });
 
 rotasCliente.get("/loja/aluguel", async (request, response) => {

@@ -1,0 +1,4 @@
+export const StatusCarro = {
+  DISPONIVEL: "DISPONIVEL",
+  INDISPONIVEL: "INDISPONIVEL"
+};

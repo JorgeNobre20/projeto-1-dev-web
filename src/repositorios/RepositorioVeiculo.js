@@ -7,6 +7,21 @@ class RepositorioVeiculo{
 		return veiculos;
 	}
 
+	async buscarTodosUnindoAlugueis(){
+		const veiculos = await bancoDeDados.obterReferenciaColecao("veiculos").aggregate([
+			{
+			 "$lookup":  {
+					"from": "alugueis",
+					"localField": "id",
+					"foreignField": "idCarro",
+					"as": "alugueis"
+				}
+			}
+		]).toArray();
+
+		return veiculos;
+	}
+
 	async buscarPorId(id){
 		const veiculo = await bancoDeDados.obterReferenciaColecao("veiculos").findOne({ id });
 		return veiculo;
