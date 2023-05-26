@@ -4,6 +4,7 @@ import { repositorioCliente, repositorioAdmin } from "../repositorios/index.js";
 import { carregarTodosCarros } from "../casos-de-uso/index.js";
 import { middlewareAutenticacao } from "../middlewares/index.js";
 import { TipoUsuario } from "../enums/index.js";
+import { servicoEmail } from "../servicos/index.js";
 
 const rotasPublicas = Router();
 
@@ -76,6 +77,7 @@ rotasPublicas.post("/signup", middlewareAutenticacao, async (request, response) 
   }
   else{
     await repositorioCliente.cadastrarUsuario(novoUsuario);
+    await servicoEmail.enviarEmail(novoUsuario.email);
     response.redirect("/signin");
   }
 
