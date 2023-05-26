@@ -22,7 +22,7 @@
     <div class="col-md-8">
       <div class="h-100 d-flex justify-content-between py-2">
         <div class="px-3 h-100 d-flex flex-column justify-content-between" style="width: 70%;">
-          <div>
+          <div class="mb-4">
             <h5 class="card-title mb-3"><%= aluguel.carro.nome %></h5>
             
             <% if(admin){ %>
@@ -35,15 +35,28 @@
                    
           </div>
 
-          <button 
-            type="button" 
-            class="btn btn-secondary btn-sm w-50"
-            data-bs-toggle="modal" 
-            data-bs-target="#modalDetalhesCarro"
-            onclick="preencherModalDetalhesCarro(<%= JSON.stringify(aluguel) %>)"
-          >
-            Ver Dados Completos do Veículo
-          </button> 
+          <div class="d-flex">
+            <button 
+              type="button" 
+              class="btn btn-secondary btn-sm me-2"
+              data-bs-toggle="modal" 
+              data-bs-target="#modalDetalhesCarro"
+              onclick="preencherModalDetalhesCarro(<%= JSON.stringify(aluguel) %>)"
+            >
+              Ver Dados do Veículo
+            </button> 
+
+            <button 
+              type="button" 
+              class="btn btn-secondary btn-sm"
+              data-bs-toggle="modal" 
+              data-bs-target="#modalDetalhesCliente"
+              onclick="preencherModalDetalhesCliente(<%= JSON.stringify(aluguel) %>)"
+            >
+              Ver Dados do Cliente
+            </button> 
+          </div>
+          
         </div>
 
         <div class="d-flex flex-column justify-content-between px-3" style="width: 30%;">
