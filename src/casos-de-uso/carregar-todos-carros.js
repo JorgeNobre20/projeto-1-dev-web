@@ -1,4 +1,4 @@
-import { StatusCarro } from "../enums/index.js";
+import { StatusAluguel, StatusCarro } from "../enums/index.js";
 import { repositorioVeiculo } from "../repositorios/RepositorioVeiculo.js";
 import { FormatoData } from "../servicos/ServicoData.js";
 import { ServicoData } from "../servicos/index.js";
@@ -14,7 +14,8 @@ export async function carregarTodosCarros(){
     let proximaDataDisponivel = null;  
 
     if(statusCarro === StatusCarro.INDISPONIVEL){
-      proximaDataDisponivel = ServicoData.formatarData(dataFinalUltimoAluguel, FormatoData.NUM_DIA_BARRA_NUM_MES_BARRA_ANO); 
+      proximaDataDisponivel = ServicoData.adicionarDias(dataFinalUltimoAluguel, 1);
+      proximaDataDisponivel = ServicoData.formatarData(proximaDataDisponivel, FormatoData.NUM_DIA_BARRA_NUM_MES_BARRA_ANO);
     }
 
     delete carroComAlugueis.alugueis;
@@ -30,16 +31,20 @@ export async function carregarTodosCarros(){
 }
 
 function obterStatusDisponivelHojeComDataUltimoAluguel(alugueis){
-  const dataAtual = new Date();
+  const dataAtualSemFusoHorario = obterDataAtualSemFusoHorario();
 
   let dataFinalUltimoAluguel = null;
   let carroDisponivelHoje = true;
 
   alugueis.forEach((aluguel) => {
+    if(aluguel.status === StatusAluguel.REJEITADO){
+      return;
+    }
+
     const instanciaDataInicial = ServicoData.instanciarDataComFusoHorarioBrasileiro(aluguel.dataInicial);
     const instanciaDataFinal = ServicoData.instanciarDataComFusoHorarioBrasileiro(aluguel.dataFinal);
 
-    if(ServicoData.dataEstaEntreDatas(dataAtual, instanciaDataInicial, instanciaDataFinal)){
+    if(ServicoData.dataEstaEntreDatas(dataAtualSemFusoHorario, instanciaDataInicial, instanciaDataFinal)){
       carroDisponivelHoje = false;
     }
 
@@ -52,4 +57,12 @@ function obterStatusDisponivelHojeComDataUltimoAluguel(alugueis){
   });
 
   return { dataFinalUltimoAluguel, carroDisponivelHoje };
+}
+
+function obterDataAtualSemFusoHorario(){
+  const dataAtual = new Date();
+  const dataAtualSemHorario = ServicoData.formatarData(dataAtual, FormatoData.ANO_HIFEN_NUM_MES_HIFEN_NUM_DIA);
+  const dataAtualSemFusoHorario = ServicoData.instanciarDataComFusoHorarioBrasileiro(dataAtualSemHorario);
+
+  return dataAtualSemFusoHorario;
 }
